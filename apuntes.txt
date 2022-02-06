@@ -4,7 +4,11 @@ UI_MainWindow
 
 mainwindow.cpp ~linea 266 hay que insertar una tab en el QTreeWidget
 
-UI_MainWindow.cpp ~linea 176 hay que hacer lo mismo q con el actionViewStack
-UI_MainWindow.cpp ~linea 573 addAction al menuView
-UI_MainWindow.cpp ~linea 645 setText
+UI_MainWindow.h ~linea 176 hay que hacer lo mismo q con el actionViewStack
+UI_MainWindow.h ~linea 573 addAction al menuView
+UI_MainWindow.h ~linea 645 setText
 
+^
+|
+
+esto es mentira!! este stack es el de la pestaña de abajo a la derecha, no el lateral al a derecha.
