@@ -267,6 +267,11 @@ void MainWindow::showWidgets()
     if(m_cfg.m_viewWindowStack)
         m_ui.tabWidget->insertTab(0, stackWidget, "Stack");
 
+// TODO quitar esto
+    // QTreeWidget *customWidget = m_ui.treeWidget_custom;
+    // if(m_cfg.m_viewWindowCustom)
+    //     m_ui.tabWidget->insertTab(0, customWidget, "Custom");
+
 //
     QTreeWidget *breakpointsWidget = m_ui.treeWidget_breakpoints;
     if(m_cfg.m_viewWindowBreakpoints)

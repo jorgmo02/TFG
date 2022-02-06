@@ -123,6 +123,10 @@ class Settings
         QByteArray m_gui_splitter4State;
 
         bool m_viewWindowStack;
+        
+        // TODO quitar esto
+        // bool m_viewWindowCustom;
+        
         bool m_viewWindowThreads;
         bool m_viewWindowBreakpoints;
         bool m_viewWindowWatch;
