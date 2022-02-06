@@ -1,0 +1,10 @@
+Clase autovarctl.h pinta bien
+MainWindow parece el gestor de todo
+UI_MainWindow
+
+mainwindow.cpp ~linea 266 hay que insertar una tab en el QTreeWidget
+
+UI_MainWindow.cpp ~linea 176 hay que hacer lo mismo q con el actionViewStack
+UI_MainWindow.cpp ~linea 573 addAction al menuView
+UI_MainWindow.cpp ~linea 645 setText
+
