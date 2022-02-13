@@ -12,3 +12,32 @@ UI_MainWindow.h ~linea 645 setText
 |
 
 esto es mentira!! este stack es el de la pestaña de abajo a la derecha, no el lateral al a derecha.
+
+
+Clase MainWindow contiene una instancia de UI_MainWindow
+
+
+AutoVarCtl es una clase que parece agrupar toda la funcionalidad de una pestañita
+/**
+* @brief Displays local variables (on the stack).
+  Hereda de VarCtl
+*/
+
+autovarctl.cpp ~linea 57 ahí se pone el algo
+
+
+// ----------------------------------------------------------------------------------
+
+ui_mainwindow.h ~linea 116 mirar el varWidget (ui_mainwindow.cpp linea 488)
+VICTORIA ES EL PARECIDO AL VARWIDGET (en realidad al autoWidget)
+
+ahora toca modificarlo i guess
+
+// ----------------------------------------------------------------------------------
+
+mainwindow.h m_autoVarCtl es quien se encarga de presentar los valores de las variables
+	(mirar mainwindow.cpp linea 783)
+	
+// ----------------------------------------------------------------------------------
+
+

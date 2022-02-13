@@ -35,6 +35,7 @@ Settings::Settings()
     m_viewWindowBreakpoints = true;
     m_viewWindowWatch = true;
     m_viewWindowAutoVariables = true;
+    m_viewWindowCustomVariables = true;
     m_viewWindowTargetOutput = true;
     m_viewWindowGedeOutput = true;
     m_viewWindowGdbOutput = true;
@@ -228,6 +229,7 @@ void Settings::loadGlobalConfig()
     m_viewWindowBreakpoints = tmpIni.getBool("GuiState/EnableWindowBreakpoints", m_viewWindowBreakpoints);
     m_viewWindowWatch = tmpIni.getBool("GuiState/EnableWindowWatch", m_viewWindowWatch);
     m_viewWindowAutoVariables = tmpIni.getBool("GuiState/EnableWindowAuto", m_viewWindowAutoVariables);
+    m_viewWindowCustomVariables = tmpIni.getBool("GuiState/EnableWindowCustom", m_viewWindowCustomVariables);
     m_viewWindowTargetOutput = tmpIni.getBool("GuiState/EnableWindowTargetOutput", m_viewWindowTargetOutput);
     m_viewWindowGedeOutput = tmpIni.getBool("GuiState/EnableWindowGedeOutput", m_viewWindowGedeOutput);
     m_viewWindowGdbOutput = tmpIni.getBool("GuiState/EnableWindowGdbOutput", m_viewWindowGdbOutput);
@@ -447,6 +449,7 @@ void Settings::saveGlobalConfig()
     tmpIni.setBool("GuiState/EnableWindowBreakpoints", m_viewWindowBreakpoints);
     tmpIni.setBool("GuiState/EnableWindowWatch", m_viewWindowWatch);
     tmpIni.setBool("GuiState/EnableWindowAuto", m_viewWindowAutoVariables);
+    tmpIni.setBool("GuiState/EnableWindowCustom", m_viewWindowCustomVariables);
     tmpIni.setBool("GuiState/EnableWindowTargetOutput", m_viewWindowTargetOutput);
     tmpIni.setBool("GuiState/EnableWindowGedeOutput", m_viewWindowGedeOutput);
     tmpIni.setBool("GuiState/EnableWindowGdbOutput", m_viewWindowGdbOutput);

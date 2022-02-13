@@ -48,14 +48,11 @@ public:
     QAction *actionSettings;
     QAction *actionStep_Out;
     QAction *actionViewStack;
-    
-    // TODO quitar esto
-    //QAction *actionViewCustom;
-    
     QAction *actionViewBreakpoints;
     QAction *actionViewThreads;
     QAction *actionViewWatch;
     QAction *actionViewAutoVariables;
+    QAction *actionViewCustomVariables;
     QAction *actionViewTargetOutput;
     QAction *actionViewGdbOutput;
     QAction *actionViewFileBrowser;
@@ -113,6 +110,7 @@ public:
     QTextEdit *gedeOutputWidget;
     QSplitter *splitter_3;
     QTreeWidget *autoWidget;
+    QTreeWidget *customWidget;
     QTreeWidget *varWidget;
     QTabWidget *tabWidget;
     QWidget *tab_threads;
@@ -124,10 +122,6 @@ public:
     QWidget *tab_stack;
     QVBoxLayout *verticalLayout_3;
     QTreeWidget *treeWidget_stack;
-    
-    // TODO quitar esto
-    //QTreeWidget *treeWidget_custom;
-    
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuExecution;
@@ -185,13 +179,6 @@ public:
         actionViewStack->setObjectName(QString::fromUtf8("actionViewStack"));
         actionViewStack->setCheckable(true);
         actionViewStack->setChecked(true);
-
-        // TODO quitar esto       
-        // actionViewCustom = new QAction(MainWindow);
-        // actionViewCustom->setObjectName(QString::fromUtf8("actionViewCustom"));
-        // actionViewCustom->setCheckable(true);
-        // actionViewCustom->setChecked(true);
-
         actionViewBreakpoints = new QAction(MainWindow);
         actionViewBreakpoints->setObjectName(QString::fromUtf8("actionViewBreakpoints"));
         actionViewBreakpoints->setCheckable(true);
@@ -484,6 +471,19 @@ public:
         autoWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         autoWidget->setUniformRowHeights(true);
         splitter_3->addWidget(autoWidget);
+
+//
+        customWidget = new QTreeWidget(splitter_3);
+        QTreeWidgetItem *__qtreewidgetitemcustom = new QTreeWidgetItem();
+        __qtreewidgetitemcustom->setText(0, QString::fromUtf8("customCustom"));
+        customWidget->setHeaderItem(__qtreewidgetitemcustom);
+        customWidget->setObjectName(QString::fromUtf8("customWidget"));
+        customWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        customWidget->setUniformRowHeights(true);
+        splitter_3->addWidget(customWidget);
+//
+
+
         varWidget = new QTreeWidget(splitter_3);
         QTreeWidgetItem *__qtreewidgetitem4 = new QTreeWidgetItem();
         __qtreewidgetitem4->setText(0, QString::fromUtf8("1"));
@@ -541,17 +541,6 @@ public:
 
         verticalLayout_3->addWidget(treeWidget_stack);
 
-// TODO borrar esto
-        // treeWidget_custom = new QTreeWidget(tab_stack);
-        // QTreeWidgetItem *__qtreewidgetitem8 = new QTreeWidgetItem();
-        // __qtreewidgetitem8->setText(0, QString::fromUtf8("1"));
-        // treeWidget_custom->setHeaderItem(__qtreewidgetitem8);
-        // treeWidget_custom->setObjectName(QString::fromUtf8("treeWidget_custom"));
-        // treeWidget_custom->setRootIsDecorated(false);
-
-        // verticalLayout_3->addWidget(treeWidget_custom);
-//
-
         tabWidget->addTab(tab_stack, QString());
         splitter_3->addWidget(tabWidget);
         splitter_4->addWidget(splitter_3);
@@ -597,10 +586,6 @@ public:
         menuExecution->addAction(actionContinue);
         menuHelp->addAction(actionAbout);
         menuView->addAction(actionViewStack);
-
-        // TODO quitar esto
-        //menuView->addAction(actionViewCustom);
-
         menuView->addAction(actionViewBreakpoints);
         menuView->addAction(actionViewThreads);
         menuView->addSeparator();
@@ -673,10 +658,6 @@ public:
         actionStep_Out->setShortcut(QApplication::translate("MainWindow", "F7", nullptr));
 #endif // QT_NO_SHORTCUT
         actionViewStack->setText(QApplication::translate("MainWindow", "Stack", nullptr));
-        
-        // TODO quitar esto
-        //actionViewCustom->setText(QApplication::translate("MainWindow", "Custom", nullptr));
-        
         actionViewBreakpoints->setText(QApplication::translate("MainWindow", "Breakpoints", nullptr));
         actionViewThreads->setText(QApplication::translate("MainWindow", "Threads", nullptr));
         actionViewWatch->setText(QApplication::translate("MainWindow", "Watch Variables", nullptr));

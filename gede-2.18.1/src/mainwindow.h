@@ -22,6 +22,7 @@
 #include "settings.h"
 #include "tagscanner.h"
 #include "autovarctl.h"
+#include "customvarctl.h"
 #include "watchvarctl.h"
 #include "codeviewtab.h"
 #include "tagmanager.h"
@@ -171,6 +172,7 @@ public slots:
     void onViewThreads();
     void onViewWatch();
     void onViewAutoVariables();
+    void onViewCustomVariables();
     void onViewTargetOutput();
     void onViewGedeOutput();
     void onViewGdbOutput();
@@ -226,6 +228,7 @@ private:
     QList<Tag> m_tagList; // Current list of tags
     
     AutoVarCtl m_autoVarCtl;
+    CustomVarCtl m_customVarCtl;
     WatchVarCtl m_watchVarCtl;
     QFont m_outputFont;
     QFont m_gdbOutputFont;

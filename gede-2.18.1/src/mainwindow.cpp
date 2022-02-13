@@ -15,6 +15,7 @@
 #include <QScrollBar>
 
 #include <assert.h>
+#include <iostream>
 
 #include "util.h"
 #include "log.h"
@@ -39,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.setupUi(this);
 
     m_autoVarCtl.setWidget(m_ui.autoWidget);
+    m_customVarCtl.setWidget(m_ui.customWidget);
     m_watchVarCtl.setWidget(m_ui.varWidget);
 
 
@@ -148,6 +150,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui.actionViewThreads, SIGNAL(triggered()), SLOT(onViewThreads()));
     connect(m_ui.actionViewWatch, SIGNAL(triggered()), SLOT(onViewWatch()));
     connect(m_ui.actionViewAutoVariables, SIGNAL(triggered()), SLOT(onViewAutoVariables()));
+    connect(m_ui.actionViewCustomVariables, SIGNAL(triggered()), SLOT(onViewCustomVariables()));
     connect(m_ui.actionViewTargetOutput, SIGNAL(triggered()), SLOT(onViewTargetOutput()));
     connect(m_ui.actionViewGedeOutput, SIGNAL(triggered()), SLOT(onViewGedeOutput()));
     connect(m_ui.actionViewGdbOutput, SIGNAL(triggered()), SLOT(onViewGdbOutput()));
@@ -303,6 +306,7 @@ void MainWindow::showWidgets()
     
     m_ui.varWidget->setVisible(m_cfg.m_viewWindowWatch);
     m_ui.autoWidget->setVisible(m_cfg.m_viewWindowAutoVariables);
+    m_ui.customWidget->setVisible(m_cfg.m_viewWindowCustomVariables);
     m_ui.treeWidget_file->setVisible(m_cfg.m_viewWindowFileBrowser);
 
 
@@ -333,6 +337,7 @@ void MainWindow::onDefaultViewSetup()
     m_cfg.m_viewWindowThreads = true;
     m_cfg.m_viewWindowWatch = true;
     m_cfg.m_viewWindowAutoVariables = true;
+    m_cfg.m_viewWindowCustomVariables = true;
     m_cfg.m_viewWindowTargetOutput = true;
     m_cfg.m_viewWindowGdbOutput = true;
     m_cfg.m_viewWindowFileBrowser = true;
@@ -353,6 +358,7 @@ void MainWindow::onDefaultViewSetup()
     m_ui.actionViewBreakpoints->setChecked(m_cfg.m_viewWindowBreakpoints);
     m_ui.actionViewWatch->setChecked(m_cfg.m_viewWindowWatch);
     m_ui.actionViewAutoVariables->setChecked(m_cfg.m_viewWindowAutoVariables);
+    m_ui.actionViewCustomVariables->setChecked(m_cfg.m_viewWindowCustomVariables);
     m_ui.actionViewTargetOutput->setChecked(m_cfg.m_viewWindowTargetOutput);
     m_ui.actionViewGedeOutput->setChecked(m_cfg.m_viewWindowGedeOutput);
     m_ui.actionViewGdbOutput->setChecked(m_cfg.m_viewWindowGdbOutput);
@@ -400,6 +406,14 @@ void MainWindow::onViewWatch()
 void MainWindow::onViewAutoVariables()
 {
       m_cfg.m_viewWindowAutoVariables = m_cfg.m_viewWindowAutoVariables ? false : true;
+     
+    showWidgets();
+}
+
+void MainWindow::onViewCustomVariables()
+{
+    std::cout << "MAINWINDOW::414: NO IMPLEMENTADO" << std::endl;
+      m_cfg.m_viewWindowCustomVariables = m_cfg.m_viewWindowCustomVariables ? false : true;
      
     showWidgets();
 }
@@ -465,6 +479,7 @@ void MainWindow::loadConfig()
     m_ui.actionViewBreakpoints->setChecked(m_cfg.m_viewWindowBreakpoints);
     m_ui.actionViewWatch->setChecked(m_cfg.m_viewWindowWatch);
     m_ui.actionViewAutoVariables->setChecked(m_cfg.m_viewWindowAutoVariables);
+    m_ui.actionViewCustomVariables->setChecked(m_cfg.m_viewWindowCustomVariables);
     m_ui.actionViewTargetOutput->setChecked(m_cfg.m_viewWindowTargetOutput);
     m_ui.actionViewGedeOutput->setChecked(m_cfg.m_viewWindowGedeOutput);
     m_ui.actionViewGdbOutput->setChecked(m_cfg.m_viewWindowGdbOutput);
@@ -788,14 +803,14 @@ void MainWindow::ICore_onWatchVarDeleted(VarWatch &watch)
 {
     m_watchVarCtl.ICore_onWatchVarDeleted(watch);
     m_autoVarCtl.ICore_onWatchVarDeleted(watch);
-
+    m_customVarCtl.ICore_onWatchVarDeleted(watch);
 }
 
 void MainWindow::ICore_onWatchVarChanged(VarWatch &watch)
 {
     m_watchVarCtl.ICore_onWatchVarChanged(watch);
     m_autoVarCtl.ICore_onWatchVarChanged(watch);
-    
+    m_customVarCtl.ICore_onWatchVarChanged(watch);
 }
 
 
@@ -803,6 +818,7 @@ void MainWindow::ICore_onWatchVarChildAdded(VarWatch &watch)
 {
     m_watchVarCtl.ICore_onWatchVarChildAdded(watch);
     m_autoVarCtl.ICore_onWatchVarChildAdded(watch);
+    m_customVarCtl.ICore_onWatchVarChildAdded(watch);
 }
 
 
@@ -1929,6 +1945,8 @@ void MainWindow::setConfig()
     m_ui.targetOutputView->setMonoFont(m_outputFont);
     
     m_autoVarCtl.setConfig(&m_cfg);
+    
+    m_customVarCtl.setConfig(&m_cfg);
 
     m_tagManager.setConfig(m_cfg);
 }
@@ -2010,6 +2028,8 @@ void MainWindow::ICore_onStateChanged(TargetState state)
         m_ui.treeWidget_stack->clear();
     }
     m_autoVarCtl.ICore_onStateChanged(state);
+    
+    m_customVarCtl.ICore_onStateChanged(state);
 }
 
 

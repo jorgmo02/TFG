@@ -81,6 +81,7 @@ SOURCES       = gd.cpp \
 		varctl.cpp \
 		watchvarctl.cpp \
 		autovarctl.cpp \
+		customvarctl.cpp \
 		consolewidget.cpp \
 		settingsdialog.cpp \
 		codeviewtab.cpp \
@@ -103,6 +104,7 @@ SOURCES       = gd.cpp \
 		moc_varctl.cpp \
 		moc_watchvarctl.cpp \
 		moc_autovarctl.cpp \
+		moc_customvarctl.cpp \
 		moc_consolewidget.cpp \
 		moc_settingsdialog.cpp \
 		moc_codeviewtab.cpp \
@@ -142,6 +144,7 @@ OBJECTS       = gd.o \
 		varctl.o \
 		watchvarctl.o \
 		autovarctl.o \
+		customvarctl.o \
 		consolewidget.o \
 		settingsdialog.o \
 		codeviewtab.o \
@@ -165,6 +168,7 @@ OBJECTS       = gd.o \
 		moc_varctl.o \
 		moc_watchvarctl.o \
 		moc_autovarctl.o \
+		moc_customvarctl.o \
 		moc_consolewidget.o \
 		moc_settingsdialog.o \
 		moc_codeviewtab.o \
@@ -231,6 +235,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -278,6 +283,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		varctl.h \
 		watchvarctl.h \
 		autovarctl.h \
+		customvarctl.h \
 		consolewidget.h \
 		settingsdialog.h \
 		codeviewtab.h \
@@ -319,6 +325,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		varctl.cpp \
 		watchvarctl.cpp \
 		autovarctl.cpp \
+		customvarctl.cpp \
 		consolewidget.cpp \
 		settingsdialog.cpp \
 		codeviewtab.cpp \
@@ -398,6 +405,7 @@ Makefile: gd.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -475,6 +483,7 @@ Makefile: gd.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -511,8 +520,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resource.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents parsecharqueue.h mainwindow.h codeview.h gdbmiparser.h core.h com.h log.h qtutil.h util.h tree.h aboutdialog.h syntaxhighlighter.h syntaxhighlighterbasic.h syntaxhighlightercxx.h syntaxhighlighterrust.h syntaxhighlighterfortran.h syntaxhighlightergolang.h syntaxhighlighterada.h adatagscanner.h ini.h opendialog.h settings.h tagscanner.h tagmanager.h rusttagscanner.h config.h varctl.h watchvarctl.h autovarctl.h consolewidget.h settingsdialog.h codeviewtab.h memorydialog.h memorywidget.h processlistdialog.h colorbutton.h autosignalblocker.h execombobox.h variableinfowindow.h tabwidgetadv.h gotodialog.h locator.h $(DISTDIR)/
-	$(COPY_FILE) --parents gd.cpp parsecharqueue.cpp mainwindow.cpp codeview.cpp gdbmiparser.cpp core.cpp com.cpp log.cpp qtutil.cpp util.cpp tree.cpp aboutdialog.cpp syntaxhighlighter.cpp syntaxhighlighterbasic.cpp syntaxhighlightercxx.cpp syntaxhighlighterrust.cpp syntaxhighlighterfortran.cpp syntaxhighlightergolang.cpp syntaxhighlighterada.cpp adatagscanner.cpp ini.cpp opendialog.cpp settings.cpp tagscanner.cpp tagmanager.cpp rusttagscanner.cpp varctl.cpp watchvarctl.cpp autovarctl.cpp consolewidget.cpp settingsdialog.cpp codeviewtab.cpp memorydialog.cpp memorywidget.cpp processlistdialog.cpp colorbutton.cpp execombobox.cpp variableinfowindow.cpp tabwidgetadv.cpp gotodialog.cpp locator.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents parsecharqueue.h mainwindow.h codeview.h gdbmiparser.h core.h com.h log.h qtutil.h util.h tree.h aboutdialog.h syntaxhighlighter.h syntaxhighlighterbasic.h syntaxhighlightercxx.h syntaxhighlighterrust.h syntaxhighlighterfortran.h syntaxhighlightergolang.h syntaxhighlighterada.h adatagscanner.h ini.h opendialog.h settings.h tagscanner.h tagmanager.h rusttagscanner.h config.h varctl.h watchvarctl.h autovarctl.h customvarctl.h consolewidget.h settingsdialog.h codeviewtab.h memorydialog.h memorywidget.h processlistdialog.h colorbutton.h autosignalblocker.h execombobox.h variableinfowindow.h tabwidgetadv.h gotodialog.h locator.h $(DISTDIR)/
+	$(COPY_FILE) --parents gd.cpp parsecharqueue.cpp mainwindow.cpp codeview.cpp gdbmiparser.cpp core.cpp com.cpp log.cpp qtutil.cpp util.cpp tree.cpp aboutdialog.cpp syntaxhighlighter.cpp syntaxhighlighterbasic.cpp syntaxhighlightercxx.cpp syntaxhighlighterrust.cpp syntaxhighlighterfortran.cpp syntaxhighlightergolang.cpp syntaxhighlighterada.cpp adatagscanner.cpp ini.cpp opendialog.cpp settings.cpp tagscanner.cpp tagmanager.cpp rusttagscanner.cpp varctl.cpp watchvarctl.cpp autovarctl.cpp customvarctl.cpp consolewidget.cpp settingsdialog.cpp codeviewtab.cpp memorydialog.cpp memorywidget.cpp processlistdialog.cpp colorbutton.cpp execombobox.cpp variableinfowindow.cpp tabwidgetadv.cpp gotodialog.cpp locator.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents settingsdialog.ui codeviewtab.ui memorydialog.ui processlistdialog.ui mainwindow.ui aboutdialog.ui opendialog.ui gotodialog.ui $(DISTDIR)/
 
 
@@ -560,14 +569,15 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -I./ -DNDEBUG -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_codeview.cpp moc_core.cpp moc_com.cpp moc_aboutdialog.cpp moc_opendialog.cpp moc_tagmanager.cpp moc_varctl.cpp moc_watchvarctl.cpp moc_autovarctl.cpp moc_consolewidget.cpp moc_settingsdialog.cpp moc_codeviewtab.cpp moc_memorydialog.cpp moc_memorywidget.cpp moc_processlistdialog.cpp moc_colorbutton.cpp moc_execombobox.cpp moc_tabwidgetadv.cpp moc_gotodialog.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_codeview.cpp moc_core.cpp moc_com.cpp moc_aboutdialog.cpp moc_opendialog.cpp moc_tagmanager.cpp moc_varctl.cpp moc_watchvarctl.cpp moc_autovarctl.cpp moc_customvarctl.cpp moc_consolewidget.cpp moc_settingsdialog.cpp moc_codeviewtab.cpp moc_memorydialog.cpp moc_memorywidget.cpp moc_processlistdialog.cpp moc_colorbutton.cpp moc_execombobox.cpp moc_tabwidgetadv.cpp moc_gotodialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_codeview.cpp moc_core.cpp moc_com.cpp moc_aboutdialog.cpp moc_opendialog.cpp moc_tagmanager.cpp moc_varctl.cpp moc_watchvarctl.cpp moc_autovarctl.cpp moc_consolewidget.cpp moc_settingsdialog.cpp moc_codeviewtab.cpp moc_memorydialog.cpp moc_memorywidget.cpp moc_processlistdialog.cpp moc_colorbutton.cpp moc_execombobox.cpp moc_tabwidgetadv.cpp moc_gotodialog.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_codeview.cpp moc_core.cpp moc_com.cpp moc_aboutdialog.cpp moc_opendialog.cpp moc_tagmanager.cpp moc_varctl.cpp moc_watchvarctl.cpp moc_autovarctl.cpp moc_customvarctl.cpp moc_consolewidget.cpp moc_settingsdialog.cpp moc_codeviewtab.cpp moc_memorydialog.cpp moc_memorywidget.cpp moc_processlistdialog.cpp moc_colorbutton.cpp moc_execombobox.cpp moc_tabwidgetadv.cpp moc_gotodialog.cpp
 moc_mainwindow.cpp: mainwindow.h \
 		consolewidget.h \
 		settings.h \
 		ini.h \
 		ui_mainwindow.h \
+		tabwidgetadv.h \
 		core.h \
 		com.h \
 		tree.h \
@@ -585,6 +595,7 @@ moc_mainwindow.cpp: mainwindow.h \
 		tagscanner.h \
 		autovarctl.h \
 		varctl.h \
+		customvarctl.h \
 		watchvarctl.h \
 		codeviewtab.h \
 		ui_codeviewtab.h \
@@ -644,6 +655,7 @@ moc_opendialog.cpp: opendialog.h \
 		tree.h \
 		config.h \
 		ui_opendialog.h \
+		execombobox.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/jorgemo/Desktop/TFG/gede-2.18.1/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jorgemo/Desktop/TFG/gede-2.18.1/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include opendialog.h -o moc_opendialog.cpp
@@ -685,6 +697,18 @@ moc_autovarctl.cpp: autovarctl.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/jorgemo/Desktop/TFG/gede-2.18.1/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jorgemo/Desktop/TFG/gede-2.18.1/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include autovarctl.h -o moc_autovarctl.cpp
 
+moc_customvarctl.cpp: customvarctl.h \
+		core.h \
+		com.h \
+		tree.h \
+		config.h \
+		settings.h \
+		ini.h \
+		varctl.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/jorgemo/Desktop/TFG/gede-2.18.1/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jorgemo/Desktop/TFG/gede-2.18.1/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include customvarctl.h -o moc_customvarctl.cpp
+
 moc_consolewidget.cpp: consolewidget.h \
 		settings.h \
 		ini.h \
@@ -696,21 +720,35 @@ moc_settingsdialog.cpp: settingsdialog.h \
 		settings.h \
 		ini.h \
 		ui_settingsdialog.h \
+		colorbutton.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/jorgemo/Desktop/TFG/gede-2.18.1/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jorgemo/Desktop/TFG/gede-2.18.1/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include settingsdialog.h -o moc_settingsdialog.cpp
 
 moc_codeviewtab.cpp: codeviewtab.h \
 		ui_codeviewtab.h \
-		tagscanner.h \
+		codeview.h \
+		syntaxhighlightercxx.h \
 		settings.h \
 		ini.h \
+		syntaxhighlighter.h \
+		syntaxhighlighterbasic.h \
+		syntaxhighlighterfortran.h \
+		parsecharqueue.h \
+		syntaxhighlightergolang.h \
+		syntaxhighlighterrust.h \
+		syntaxhighlighterada.h \
+		variableinfowindow.h \
+		tagscanner.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/jorgemo/Desktop/TFG/gede-2.18.1/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jorgemo/Desktop/TFG/gede-2.18.1/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include codeviewtab.h -o moc_codeviewtab.cpp
 
 moc_memorydialog.cpp: memorydialog.h \
 		ui_memorydialog.h \
+		memorywidget.h \
+		settings.h \
+		ini.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/jorgemo/Desktop/TFG/gede-2.18.1/src/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jorgemo/Desktop/TFG/gede-2.18.1/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include memorydialog.h -o moc_memorydialog.cpp
@@ -831,6 +869,7 @@ gd.o: gd.cpp mainwindow.h \
 		settings.h \
 		ini.h \
 		ui_mainwindow.h \
+		tabwidgetadv.h \
 		core.h \
 		com.h \
 		tree.h \
@@ -848,6 +887,7 @@ gd.o: gd.cpp mainwindow.h \
 		tagscanner.h \
 		autovarctl.h \
 		varctl.h \
+		customvarctl.h \
 		watchvarctl.h \
 		codeviewtab.h \
 		ui_codeviewtab.h \
@@ -857,6 +897,7 @@ gd.o: gd.cpp mainwindow.h \
 		util.h \
 		opendialog.h \
 		ui_opendialog.h \
+		execombobox.h \
 		version.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gd.o gd.cpp
 
@@ -868,6 +909,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		settings.h \
 		ini.h \
 		ui_mainwindow.h \
+		tabwidgetadv.h \
 		core.h \
 		com.h \
 		tree.h \
@@ -885,6 +927,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		tagscanner.h \
 		autovarctl.h \
 		varctl.h \
+		customvarctl.h \
 		watchvarctl.h \
 		codeviewtab.h \
 		ui_codeviewtab.h \
@@ -896,8 +939,10 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		ui_aboutdialog.h \
 		settingsdialog.h \
 		ui_settingsdialog.h \
+		colorbutton.h \
 		memorydialog.h \
 		ui_memorydialog.h \
+		memorywidget.h \
 		gotodialog.h \
 		ui_gotodialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
@@ -1045,6 +1090,7 @@ opendialog.o: opendialog.cpp opendialog.h \
 		tree.h \
 		config.h \
 		ui_opendialog.h \
+		execombobox.h \
 		version.h \
 		log.h \
 		util.h \
@@ -1077,6 +1123,7 @@ tagmanager.o: tagmanager.cpp tagmanager.h \
 		mainwindow.h \
 		consolewidget.h \
 		ui_mainwindow.h \
+		tabwidgetadv.h \
 		core.h \
 		com.h \
 		tree.h \
@@ -1093,6 +1140,7 @@ tagmanager.o: tagmanager.cpp tagmanager.h \
 		variableinfowindow.h \
 		autovarctl.h \
 		varctl.h \
+		customvarctl.h \
 		watchvarctl.h \
 		codeviewtab.h \
 		ui_codeviewtab.h \
@@ -1138,8 +1186,25 @@ autovarctl.o: autovarctl.cpp autovarctl.h \
 		util.h \
 		memorydialog.h \
 		ui_memorydialog.h \
+		memorywidget.h \
 		autosignalblocker.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o autovarctl.o autovarctl.cpp
+
+customvarctl.o: customvarctl.cpp customvarctl.h \
+		core.h \
+		com.h \
+		tree.h \
+		config.h \
+		settings.h \
+		ini.h \
+		varctl.h \
+		log.h \
+		util.h \
+		memorydialog.h \
+		ui_memorydialog.h \
+		memorywidget.h \
+		autosignalblocker.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o customvarctl.o customvarctl.cpp
 
 consolewidget.o: consolewidget.cpp consolewidget.h \
 		settings.h \
@@ -1155,6 +1220,7 @@ settingsdialog.o: settingsdialog.cpp settingsdialog.h \
 		settings.h \
 		ini.h \
 		ui_settingsdialog.h \
+		colorbutton.h \
 		version.h \
 		log.h \
 		util.h
@@ -1162,9 +1228,19 @@ settingsdialog.o: settingsdialog.cpp settingsdialog.h \
 
 codeviewtab.o: codeviewtab.cpp codeviewtab.h \
 		ui_codeviewtab.h \
-		tagscanner.h \
+		codeview.h \
+		syntaxhighlightercxx.h \
 		settings.h \
 		ini.h \
+		syntaxhighlighter.h \
+		syntaxhighlighterbasic.h \
+		syntaxhighlighterfortran.h \
+		parsecharqueue.h \
+		syntaxhighlightergolang.h \
+		syntaxhighlighterrust.h \
+		syntaxhighlighterada.h \
+		variableinfowindow.h \
+		tagscanner.h \
 		config.h \
 		util.h \
 		log.h
@@ -1172,12 +1248,13 @@ codeviewtab.o: codeviewtab.cpp codeviewtab.h \
 
 memorydialog.o: memorydialog.cpp memorydialog.h \
 		ui_memorydialog.h \
+		memorywidget.h \
+		settings.h \
+		ini.h \
 		core.h \
 		com.h \
 		tree.h \
 		config.h \
-		settings.h \
-		ini.h \
 		util.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o memorydialog.o memorydialog.cpp
 
@@ -1242,6 +1319,7 @@ locator.o: locator.cpp locator.h \
 		mainwindow.h \
 		consolewidget.h \
 		ui_mainwindow.h \
+		tabwidgetadv.h \
 		codeview.h \
 		syntaxhighlightercxx.h \
 		syntaxhighlighter.h \
@@ -1254,6 +1332,7 @@ locator.o: locator.cpp locator.h \
 		variableinfowindow.h \
 		autovarctl.h \
 		varctl.h \
+		customvarctl.h \
 		watchvarctl.h \
 		codeviewtab.h \
 		ui_codeviewtab.h \
@@ -1292,6 +1371,9 @@ moc_watchvarctl.o: moc_watchvarctl.cpp
 
 moc_autovarctl.o: moc_autovarctl.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_autovarctl.o moc_autovarctl.cpp
+
+moc_customvarctl.o: moc_customvarctl.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_customvarctl.o moc_customvarctl.cpp
 
 moc_consolewidget.o: moc_consolewidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_consolewidget.o moc_consolewidget.cpp

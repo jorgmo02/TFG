@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[74];
-    char stringdata0[1367];
+    QByteArrayData data[75];
+    char stringdata0[1389];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -86,25 +86,26 @@ QT_MOC_LITERAL(51, 954, 17), // "onViewBreakpoints"
 QT_MOC_LITERAL(52, 972, 13), // "onViewThreads"
 QT_MOC_LITERAL(53, 986, 11), // "onViewWatch"
 QT_MOC_LITERAL(54, 998, 19), // "onViewAutoVariables"
-QT_MOC_LITERAL(55, 1018, 18), // "onViewTargetOutput"
-QT_MOC_LITERAL(56, 1037, 16), // "onViewGedeOutput"
-QT_MOC_LITERAL(57, 1054, 15), // "onViewGdbOutput"
-QT_MOC_LITERAL(58, 1070, 17), // "onViewFileBrowser"
-QT_MOC_LITERAL(59, 1088, 16), // "onViewFuncFilter"
-QT_MOC_LITERAL(60, 1105, 17), // "onViewClassFilter"
-QT_MOC_LITERAL(61, 1123, 18), // "onDefaultViewSetup"
-QT_MOC_LITERAL(62, 1142, 27), // "onBreakpointsRemoveSelected"
-QT_MOC_LITERAL(63, 1170, 22), // "onBreakpointsRemoveAll"
-QT_MOC_LITERAL(64, 1193, 17), // "onBreakpointsGoTo"
-QT_MOC_LITERAL(65, 1211, 30), // "onBreakpointsWidgetContextMenu"
-QT_MOC_LITERAL(66, 1242, 2), // "pt"
-QT_MOC_LITERAL(67, 1245, 17), // "onAllTagScansDone"
-QT_MOC_LITERAL(68, 1263, 24), // "onFuncWidgetItemSelected"
-QT_MOC_LITERAL(69, 1288, 25), // "onClassWidgetItemSelected"
-QT_MOC_LITERAL(70, 1314, 12), // "onNewInfoMsg"
-QT_MOC_LITERAL(71, 1327, 12), // "onNewWarnMsg"
-QT_MOC_LITERAL(72, 1340, 13), // "onNewErrorMsg"
-QT_MOC_LITERAL(73, 1354, 12) // "onNewCritMsg"
+QT_MOC_LITERAL(55, 1018, 21), // "onViewCustomVariables"
+QT_MOC_LITERAL(56, 1040, 18), // "onViewTargetOutput"
+QT_MOC_LITERAL(57, 1059, 16), // "onViewGedeOutput"
+QT_MOC_LITERAL(58, 1076, 15), // "onViewGdbOutput"
+QT_MOC_LITERAL(59, 1092, 17), // "onViewFileBrowser"
+QT_MOC_LITERAL(60, 1110, 16), // "onViewFuncFilter"
+QT_MOC_LITERAL(61, 1127, 17), // "onViewClassFilter"
+QT_MOC_LITERAL(62, 1145, 18), // "onDefaultViewSetup"
+QT_MOC_LITERAL(63, 1164, 27), // "onBreakpointsRemoveSelected"
+QT_MOC_LITERAL(64, 1192, 22), // "onBreakpointsRemoveAll"
+QT_MOC_LITERAL(65, 1215, 17), // "onBreakpointsGoTo"
+QT_MOC_LITERAL(66, 1233, 30), // "onBreakpointsWidgetContextMenu"
+QT_MOC_LITERAL(67, 1264, 2), // "pt"
+QT_MOC_LITERAL(68, 1267, 17), // "onAllTagScansDone"
+QT_MOC_LITERAL(69, 1285, 24), // "onFuncWidgetItemSelected"
+QT_MOC_LITERAL(70, 1310, 25), // "onClassWidgetItemSelected"
+QT_MOC_LITERAL(71, 1336, 12), // "onNewInfoMsg"
+QT_MOC_LITERAL(72, 1349, 12), // "onNewWarnMsg"
+QT_MOC_LITERAL(73, 1362, 13), // "onNewErrorMsg"
+QT_MOC_LITERAL(74, 1376, 12) // "onNewCritMsg"
 
     },
     "MainWindow\0newInfoMsg\0\0text\0newWarnMsg\0"
@@ -134,10 +135,11 @@ QT_MOC_LITERAL(73, 1354, 12) // "onNewCritMsg"
     "onCodeViewContextMenuJumpToLocation\0"
     "onViewStack\0onViewBreakpoints\0"
     "onViewThreads\0onViewWatch\0onViewAutoVariables\0"
-    "onViewTargetOutput\0onViewGedeOutput\0"
-    "onViewGdbOutput\0onViewFileBrowser\0"
-    "onViewFuncFilter\0onViewClassFilter\0"
-    "onDefaultViewSetup\0onBreakpointsRemoveSelected\0"
+    "onViewCustomVariables\0onViewTargetOutput\0"
+    "onViewGedeOutput\0onViewGdbOutput\0"
+    "onViewFileBrowser\0onViewFuncFilter\0"
+    "onViewClassFilter\0onDefaultViewSetup\0"
+    "onBreakpointsRemoveSelected\0"
     "onBreakpointsRemoveAll\0onBreakpointsGoTo\0"
     "onBreakpointsWidgetContextMenu\0pt\0"
     "onAllTagScansDone\0onFuncWidgetItemSelected\0"
@@ -152,7 +154,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      64,   14, // methods
+      65,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -160,72 +162,73 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  334,    2, 0x06 /* Public */,
-       4,    1,  337,    2, 0x06 /* Public */,
-       5,    1,  340,    2, 0x06 /* Public */,
-       6,    1,  343,    2, 0x06 /* Public */,
+       1,    1,  339,    2, 0x06 /* Public */,
+       4,    1,  342,    2, 0x06 /* Public */,
+       5,    1,  345,    2, 0x06 /* Public */,
+       6,    1,  348,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    1,  346,    2, 0x0a /* Public */,
-       8,    0,  349,    2, 0x0a /* Public */,
-       9,    1,  350,    2, 0x0a /* Public */,
-      11,    1,  353,    2, 0x0a /* Public */,
-      12,    0,  356,    2, 0x0a /* Public */,
-      13,    1,  357,    2, 0x0a /* Public */,
-      14,    1,  360,    2, 0x0a /* Public */,
-      15,    2,  363,    2, 0x0a /* Public */,
-      19,    0,  368,    2, 0x0a /* Public */,
-      20,    0,  369,    2, 0x0a /* Public */,
-      21,    0,  370,    2, 0x0a /* Public */,
-      22,    0,  371,    2, 0x0a /* Public */,
-      23,    0,  372,    2, 0x0a /* Public */,
-      24,    0,  373,    2, 0x0a /* Public */,
-      25,    0,  374,    2, 0x0a /* Public */,
-      26,    0,  375,    2, 0x0a /* Public */,
-      27,    1,  376,    2, 0x0a /* Public */,
-      28,    0,  379,    2, 0x0a /* Public */,
-      29,    0,  380,    2, 0x0a /* Public */,
-      30,    0,  381,    2, 0x0a /* Public */,
-      31,    0,  382,    2, 0x0a /* Public */,
-      32,    0,  383,    2, 0x0a /* Public */,
-      33,    2,  384,    2, 0x0a /* Public */,
-      34,    0,  389,    2, 0x0a /* Public */,
-      35,    0,  390,    2, 0x0a /* Public */,
-      36,    0,  391,    2, 0x0a /* Public */,
-      37,    0,  392,    2, 0x0a /* Public */,
-      38,    0,  393,    2, 0x0a /* Public */,
-      39,    0,  394,    2, 0x0a /* Public */,
-      40,    0,  395,    2, 0x0a /* Public */,
-      41,    0,  396,    2, 0x0a /* Public */,
-      42,    1,  397,    2, 0x0a /* Public */,
-      44,    1,  400,    2, 0x0a /* Public */,
-      46,    1,  403,    2, 0x0a /* Public */,
-      47,    0,  406,    2, 0x0a /* Public */,
-      48,    0,  407,    2, 0x0a /* Public */,
-      49,    0,  408,    2, 0x0a /* Public */,
-      50,    0,  409,    2, 0x0a /* Public */,
-      51,    0,  410,    2, 0x0a /* Public */,
-      52,    0,  411,    2, 0x0a /* Public */,
-      53,    0,  412,    2, 0x0a /* Public */,
-      54,    0,  413,    2, 0x0a /* Public */,
-      55,    0,  414,    2, 0x0a /* Public */,
-      56,    0,  415,    2, 0x0a /* Public */,
-      57,    0,  416,    2, 0x0a /* Public */,
-      58,    0,  417,    2, 0x0a /* Public */,
-      59,    0,  418,    2, 0x0a /* Public */,
-      60,    0,  419,    2, 0x0a /* Public */,
-      61,    0,  420,    2, 0x0a /* Public */,
-      62,    0,  421,    2, 0x0a /* Public */,
-      63,    0,  422,    2, 0x0a /* Public */,
-      64,    0,  423,    2, 0x0a /* Public */,
-      65,    1,  424,    2, 0x0a /* Public */,
-      67,    0,  427,    2, 0x0a /* Public */,
-      68,    2,  428,    2, 0x0a /* Public */,
-      69,    2,  433,    2, 0x0a /* Public */,
-      70,    1,  438,    2, 0x0a /* Public */,
-      71,    1,  441,    2, 0x0a /* Public */,
-      72,    1,  444,    2, 0x0a /* Public */,
-      73,    1,  447,    2, 0x0a /* Public */,
+       7,    1,  351,    2, 0x0a /* Public */,
+       8,    0,  354,    2, 0x0a /* Public */,
+       9,    1,  355,    2, 0x0a /* Public */,
+      11,    1,  358,    2, 0x0a /* Public */,
+      12,    0,  361,    2, 0x0a /* Public */,
+      13,    1,  362,    2, 0x0a /* Public */,
+      14,    1,  365,    2, 0x0a /* Public */,
+      15,    2,  368,    2, 0x0a /* Public */,
+      19,    0,  373,    2, 0x0a /* Public */,
+      20,    0,  374,    2, 0x0a /* Public */,
+      21,    0,  375,    2, 0x0a /* Public */,
+      22,    0,  376,    2, 0x0a /* Public */,
+      23,    0,  377,    2, 0x0a /* Public */,
+      24,    0,  378,    2, 0x0a /* Public */,
+      25,    0,  379,    2, 0x0a /* Public */,
+      26,    0,  380,    2, 0x0a /* Public */,
+      27,    1,  381,    2, 0x0a /* Public */,
+      28,    0,  384,    2, 0x0a /* Public */,
+      29,    0,  385,    2, 0x0a /* Public */,
+      30,    0,  386,    2, 0x0a /* Public */,
+      31,    0,  387,    2, 0x0a /* Public */,
+      32,    0,  388,    2, 0x0a /* Public */,
+      33,    2,  389,    2, 0x0a /* Public */,
+      34,    0,  394,    2, 0x0a /* Public */,
+      35,    0,  395,    2, 0x0a /* Public */,
+      36,    0,  396,    2, 0x0a /* Public */,
+      37,    0,  397,    2, 0x0a /* Public */,
+      38,    0,  398,    2, 0x0a /* Public */,
+      39,    0,  399,    2, 0x0a /* Public */,
+      40,    0,  400,    2, 0x0a /* Public */,
+      41,    0,  401,    2, 0x0a /* Public */,
+      42,    1,  402,    2, 0x0a /* Public */,
+      44,    1,  405,    2, 0x0a /* Public */,
+      46,    1,  408,    2, 0x0a /* Public */,
+      47,    0,  411,    2, 0x0a /* Public */,
+      48,    0,  412,    2, 0x0a /* Public */,
+      49,    0,  413,    2, 0x0a /* Public */,
+      50,    0,  414,    2, 0x0a /* Public */,
+      51,    0,  415,    2, 0x0a /* Public */,
+      52,    0,  416,    2, 0x0a /* Public */,
+      53,    0,  417,    2, 0x0a /* Public */,
+      54,    0,  418,    2, 0x0a /* Public */,
+      55,    0,  419,    2, 0x0a /* Public */,
+      56,    0,  420,    2, 0x0a /* Public */,
+      57,    0,  421,    2, 0x0a /* Public */,
+      58,    0,  422,    2, 0x0a /* Public */,
+      59,    0,  423,    2, 0x0a /* Public */,
+      60,    0,  424,    2, 0x0a /* Public */,
+      61,    0,  425,    2, 0x0a /* Public */,
+      62,    0,  426,    2, 0x0a /* Public */,
+      63,    0,  427,    2, 0x0a /* Public */,
+      64,    0,  428,    2, 0x0a /* Public */,
+      65,    0,  429,    2, 0x0a /* Public */,
+      66,    1,  430,    2, 0x0a /* Public */,
+      68,    0,  433,    2, 0x0a /* Public */,
+      69,    2,  434,    2, 0x0a /* Public */,
+      70,    2,  439,    2, 0x0a /* Public */,
+      71,    1,  444,    2, 0x0a /* Public */,
+      72,    1,  447,    2, 0x0a /* Public */,
+      73,    1,  450,    2, 0x0a /* Public */,
+      74,    1,  453,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -286,7 +289,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QPoint,   66,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QPoint,   67,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 16, QMetaType::Int,   17,   18,
     QMetaType::Void, 0x80000000 | 16, QMetaType::Int,   17,   18,
@@ -350,24 +354,25 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 43: _t->onViewThreads(); break;
         case 44: _t->onViewWatch(); break;
         case 45: _t->onViewAutoVariables(); break;
-        case 46: _t->onViewTargetOutput(); break;
-        case 47: _t->onViewGedeOutput(); break;
-        case 48: _t->onViewGdbOutput(); break;
-        case 49: _t->onViewFileBrowser(); break;
-        case 50: _t->onViewFuncFilter(); break;
-        case 51: _t->onViewClassFilter(); break;
-        case 52: _t->onDefaultViewSetup(); break;
-        case 53: _t->onBreakpointsRemoveSelected(); break;
-        case 54: _t->onBreakpointsRemoveAll(); break;
-        case 55: _t->onBreakpointsGoTo(); break;
-        case 56: _t->onBreakpointsWidgetContextMenu((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 57: _t->onAllTagScansDone(); break;
-        case 58: _t->onFuncWidgetItemSelected((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 59: _t->onClassWidgetItemSelected((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 60: _t->onNewInfoMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 61: _t->onNewWarnMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 62: _t->onNewErrorMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 63: _t->onNewCritMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 46: _t->onViewCustomVariables(); break;
+        case 47: _t->onViewTargetOutput(); break;
+        case 48: _t->onViewGedeOutput(); break;
+        case 49: _t->onViewGdbOutput(); break;
+        case 50: _t->onViewFileBrowser(); break;
+        case 51: _t->onViewFuncFilter(); break;
+        case 52: _t->onViewClassFilter(); break;
+        case 53: _t->onDefaultViewSetup(); break;
+        case 54: _t->onBreakpointsRemoveSelected(); break;
+        case 55: _t->onBreakpointsRemoveAll(); break;
+        case 56: _t->onBreakpointsGoTo(); break;
+        case 57: _t->onBreakpointsWidgetContextMenu((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 58: _t->onAllTagScansDone(); break;
+        case 59: _t->onFuncWidgetItemSelected((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 60: _t->onClassWidgetItemSelected((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 61: _t->onNewInfoMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 62: _t->onNewWarnMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 63: _t->onNewErrorMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 64: _t->onNewCritMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -438,13 +443,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 64)
+        if (_id < 65)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 64;
+        _id -= 65;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 64)
+        if (_id < 65)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 64;
+        _id -= 65;
     }
     return _id;
 }

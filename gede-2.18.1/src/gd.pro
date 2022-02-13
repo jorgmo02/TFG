@@ -68,8 +68,8 @@ HEADERS+=rusttagscanner.h
 
 HEADERS+=config.h
 
-SOURCES+=varctl.cpp watchvarctl.cpp autovarctl.cpp
-HEADERS+=varctl.h watchvarctl.h autovarctl.h
+SOURCES+=varctl.cpp watchvarctl.cpp autovarctl.cpp customvarctl.cpp
+HEADERS+=varctl.h watchvarctl.h autovarctl.h customvarctl.h
 
 SOURCES+=consolewidget.cpp
 HEADERS+=consolewidget.h
