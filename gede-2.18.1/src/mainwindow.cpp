@@ -796,6 +796,7 @@ void MainWindow::insertSourceFiles()
 void MainWindow::ICore_onLocalVarChanged(QStringList varNames)
 {
     m_autoVarCtl.ICore_onLocalVarChanged(varNames);
+    m_customVarCtl.ICore_onLocalVarChanged(varNames);
 }
 
 

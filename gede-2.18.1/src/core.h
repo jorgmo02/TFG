@@ -272,6 +272,10 @@ public:
     void stop();
     int gdbExpandVarWatchChildren(QString watchId);
     int gdbGetMemory(quint64 addr, size_t count, QByteArray *data);
+
+    // TODO
+    // int gdbGetMemoryMap();
+    // 
     
     void selectThread(int threadId);
     void selectFrame(int selectedFrameIdx);

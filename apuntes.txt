@@ -41,3 +41,23 @@ mainwindow.h m_autoVarCtl es quien se encarga de presentar los valores de las va
 // ----------------------------------------------------------------------------------
 
 
+Core (core.cpp) es la clase que se encarga de comunicar gdb e interfaz, mediante llamadas como (core.cpp line 1471 gdbGetThreadList):
+
+		GdbCom& com = GdbCom::getInstance();
+	    	Tree resultData;
+
+	    	if(m_targetState == ICore::TARGET_STARTING || m_targetState == ICore::TARGET_RUNNING)
+	    	{
+			if(m_inf)
+		    		m_inf->ICore_onMessage("Program is currently running");
+			return;
+		}
+
+->>>>>>>	com.commandF(&resultData, "-thread-info");
+
+
+tengo que hacer un gdbGetMemoryMap(), básicamente, en la clase Core y enlazarlo con la función correspondiente que actualice la UI
+
+// ----------------------------------------------------------------------------------
+
+

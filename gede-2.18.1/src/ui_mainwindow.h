@@ -191,6 +191,13 @@ public:
         actionViewAutoVariables = new QAction(MainWindow);
         actionViewAutoVariables->setObjectName(QString::fromUtf8("actionViewAutoVariables"));
         actionViewAutoVariables->setCheckable(true);
+
+//
+        actionViewCustomVariables = new QAction(MainWindow);
+        actionViewCustomVariables->setObjectName(QString::fromUtf8("actionViewCustomVariables"));
+        actionViewCustomVariables->setCheckable(true);
+//
+
         actionViewTargetOutput = new QAction(MainWindow);
         actionViewTargetOutput->setObjectName(QString::fromUtf8("actionViewTargetOutput"));
         actionViewTargetOutput->setCheckable(true);
@@ -482,7 +489,6 @@ public:
         customWidget->setUniformRowHeights(true);
         splitter_3->addWidget(customWidget);
 //
-
 
         varWidget = new QTreeWidget(splitter_3);
         QTreeWidgetItem *__qtreewidgetitem4 = new QTreeWidgetItem();
