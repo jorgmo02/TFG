@@ -60,4 +60,38 @@ tengo que hacer un gdbGetMemoryMap(), básicamente, en la clase Core y enlazarlo
 
 // ----------------------------------------------------------------------------------
 
+mirar GDB/MI pmap / popen.
+
+// ----------------------------------------------------------------------------------
+
+mirar:
+	- cat /proc/(pid)/maps
+		- Muestra todas las regiones + librerias
+		- Tengo que parsear la salida (mirar strtok)
+	- pmap -x (pid)
+		- mirar también popen: 
+			FILE* popen("pmap -x (pid)", "r")
+			- Uso el FILE* para leer la salida estandar de pmap -x (pid)
+			pclose(FILE*)
+// ----------------------------------------------------------------------------------
+
+En la ventana:
+	Una línea por región
+	2/3  columnas según si queda muy sobrecargado o no
+		- posición de memoria inicial
+		- fichero de respaldo
+		- (¿tamaño?)
+	flechita desplegable que muestre más info
+		- (¿tamaño?)
+		- posición de memoria final
+		- permisos del fichero de respaldo
+		- nº paginas
+
+// ----------------------------------------------------------------------------------
+
+Mirar posibilidad de resaltar variable (adicional)
+
+// ----------------------------------------------------------------------------------
+
+
 
