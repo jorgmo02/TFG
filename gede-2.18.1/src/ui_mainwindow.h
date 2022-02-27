@@ -191,13 +191,9 @@ public:
         actionViewAutoVariables = new QAction(MainWindow);
         actionViewAutoVariables->setObjectName(QString::fromUtf8("actionViewAutoVariables"));
         actionViewAutoVariables->setCheckable(true);
-
-//
         actionViewCustomVariables = new QAction(MainWindow);
         actionViewCustomVariables->setObjectName(QString::fromUtf8("actionViewCustomVariables"));
         actionViewCustomVariables->setCheckable(true);
-//
-
         actionViewTargetOutput = new QAction(MainWindow);
         actionViewTargetOutput->setObjectName(QString::fromUtf8("actionViewTargetOutput"));
         actionViewTargetOutput->setCheckable(true);
@@ -477,7 +473,6 @@ public:
         autoWidget->setObjectName(QString::fromUtf8("autoWidget"));
         autoWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         autoWidget->setUniformRowHeights(true);
-        splitter_3->addWidget(autoWidget);
 
 //
         customWidget = new QTreeWidget(splitter_3);
@@ -487,9 +482,9 @@ public:
         customWidget->setObjectName(QString::fromUtf8("customWidget"));
         customWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         customWidget->setUniformRowHeights(true);
-        splitter_3->addWidget(customWidget);
 //
 
+        splitter_3->addWidget(autoWidget);
         varWidget = new QTreeWidget(splitter_3);
         QTreeWidgetItem *__qtreewidgetitem4 = new QTreeWidgetItem();
         __qtreewidgetitem4->setText(0, QString::fromUtf8("1"));
@@ -597,6 +592,7 @@ public:
         menuView->addSeparator();
         menuView->addAction(actionViewWatch);
         menuView->addAction(actionViewAutoVariables);
+        menuView->addAction(actionViewCustomVariables);
         menuView->addSeparator();
         menuView->addAction(actionViewTargetOutput);
         menuView->addAction(actionViewGedeOutput);
@@ -668,6 +664,7 @@ public:
         actionViewThreads->setText(QApplication::translate("MainWindow", "Threads", nullptr));
         actionViewWatch->setText(QApplication::translate("MainWindow", "Watch Variables", nullptr));
         actionViewAutoVariables->setText(QApplication::translate("MainWindow", "Auto Variables", nullptr));
+        actionViewCustomVariables->setText(QApplication::translate("MainWindow", "Custom Variables", nullptr));
         actionViewTargetOutput->setText(QApplication::translate("MainWindow", "Target Console", nullptr));
         actionViewGdbOutput->setText(QApplication::translate("MainWindow", "GDB Output", nullptr));
         actionViewFileBrowser->setText(QApplication::translate("MainWindow", "File Browser", nullptr));

@@ -412,7 +412,7 @@ void MainWindow::onViewAutoVariables()
 
 void MainWindow::onViewCustomVariables()
 {
-    std::cout << "MAINWINDOW::414: NO IMPLEMENTADO" << std::endl;
+    std::cout << "MAINWINDOW::414: NO IMPLEMENTADO CON LA FUNCIONALIDAD CUSTOM" << std::endl;
       m_cfg.m_viewWindowCustomVariables = m_cfg.m_viewWindowCustomVariables ? false : true;
      
     showWidgets();

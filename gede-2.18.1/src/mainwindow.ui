@@ -613,6 +613,7 @@
     <addaction name="separator"/>
     <addaction name="actionViewWatch"/>
     <addaction name="actionViewAutoVariables"/>
+    <addaction name="actionViewCustomVariables"/>
     <addaction name="separator"/>
     <addaction name="actionViewTargetOutput"/>
     <addaction name="actionViewGedeOutput"/>
@@ -794,6 +795,14 @@
    </property>
    <property name="text">
     <string>Auto Variables</string>
+   </property>
+  </action>
+  <action name="actionViewCustomVariables">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Custom Variables</string>
    </property>
   </action>
   <action name="actionViewTargetOutput">
