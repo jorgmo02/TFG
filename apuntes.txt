@@ -40,6 +40,10 @@ mainwindow.h m_autoVarCtl es quien se encarga de presentar los valores de las va
 	
 // ----------------------------------------------------------------------------------
 
+Mirar para modificar el restore default view
+
+// ----------------------------------------------------------------------------------
+
 
 Core (core.cpp) es la clase que se encarga de comunicar gdb e interfaz, mediante llamadas como (core.cpp line 1471 gdbGetThreadList):
 
