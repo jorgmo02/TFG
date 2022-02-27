@@ -40,7 +40,7 @@ mainwindow.h m_autoVarCtl es quien se encarga de presentar los valores de las va
 	
 // ----------------------------------------------------------------------------------
 
-Mirar para modificar el restore default view
+Mirar para modificar el restore default view (mainwindow.cpp 224)
 
 // ----------------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ Core (core.cpp) es la clase que se encarga de comunicar gdb e interfaz, mediante
 	    	Tree resultData;
 
 	    	if(m_targetState == ICore::TARGET_STARTING || m_targetState == ICore::TARGET_RUNNING)
-	    	{
+	    	{2
 			if(m_inf)
 		    		m_inf->ICore_onMessage("Program is currently running");
 			return;
