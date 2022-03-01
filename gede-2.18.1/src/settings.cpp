@@ -221,10 +221,6 @@ void Settings::loadGlobalConfig()
     tmpIni.getByteArray("GuiState/Splitter4State", &m_gui_splitter4State);
 
     m_viewWindowStack = tmpIni.getBool("GuiState/EnableWindowStack", m_viewWindowStack);
-    
-    // TODO quitar esto
-    // m_viewWindowCustom = tmpIni.getBool("GuiState/EnableWindowCustom", m_viewWindowCustom);
-    
     m_viewWindowThreads = tmpIni.getBool("GuiState/EnableWindowThreads", m_viewWindowThreads);
     m_viewWindowBreakpoints = tmpIni.getBool("GuiState/EnableWindowBreakpoints", m_viewWindowBreakpoints);
     m_viewWindowWatch = tmpIni.getBool("GuiState/EnableWindowWatch", m_viewWindowWatch);

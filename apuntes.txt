@@ -27,20 +27,32 @@ autovarctl.cpp ~linea 57 ahí se pone el algo
 
 
 // ----------------------------------------------------------------------------------
-
+HECHO
 ui_mainwindow.h ~linea 116 mirar el varWidget (ui_mainwindow.cpp linea 488)
 VICTORIA ES EL PARECIDO AL VARWIDGET (en realidad al autoWidget)
-
-ahora toca modificarlo i guess
-
+HECHO
 // ----------------------------------------------------------------------------------
-
+HECHO
 mainwindow.h m_autoVarCtl es quien se encarga de presentar los valores de las variables
 	(mirar mainwindow.cpp linea 783)
-	
+HECHO
+// ----------------------------------------------------------------------------------
+HECHO
+Mirar para modificar el restore default view (mainwindow.cpp 224)
+HECHO
 // ----------------------------------------------------------------------------------
 
-Mirar para modificar el restore default view (mainwindow.cpp 224)
+En la ventana:
+	Una línea por región
+	2/3  columnas según si queda muy sobrecargado o no
+		- posición de memoria inicial
+		- fichero de respaldo
+		- (¿tamaño?)
+	flechita desplegable que muestre más info
+		- (¿tamaño?)
+		- posición de memoria final
+		- permisos del fichero de respaldo
+		- nº paginas
 
 // ----------------------------------------------------------------------------------
 
@@ -77,20 +89,6 @@ mirar:
 			FILE* popen("pmap -x (pid)", "r")
 			- Uso el FILE* para leer la salida estandar de pmap -x (pid)
 			pclose(FILE*)
-// ----------------------------------------------------------------------------------
-
-En la ventana:
-	Una línea por región
-	2/3  columnas según si queda muy sobrecargado o no
-		- posición de memoria inicial
-		- fichero de respaldo
-		- (¿tamaño?)
-	flechita desplegable que muestre más info
-		- (¿tamaño?)
-		- posición de memoria final
-		- permisos del fichero de respaldo
-		- nº paginas
-
 // ----------------------------------------------------------------------------------
 
 Mirar posibilidad de resaltar variable (adicional)
