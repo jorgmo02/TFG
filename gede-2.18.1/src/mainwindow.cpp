@@ -117,7 +117,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     //
     QList<int> slist3;
-    slist3.append(300);
+    slist3.append(180);
+    slist3.append(120);
     slist3.append(120);
     slist3.append(120);
     m_ui.splitter_3->setSizes(slist3);
