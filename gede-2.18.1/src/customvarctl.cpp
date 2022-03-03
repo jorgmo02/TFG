@@ -65,9 +65,9 @@ void CustomVarCtl::setWidget(QTreeWidget *autoWidget)
     m_autoWidget->setColumnWidth(COLUMN_NAME, 120);
     m_autoWidget->setColumnWidth(COLUMN_VALUE, 140);
     QStringList names;
-    names += "Name";
-    names += "Value";
-    names += "Type";
+    names += "Memory position";
+    names += "Backup file";
+    names += "Size";
     m_autoWidget->setHeaderLabels(names);
     connect(m_autoWidget, SIGNAL(itemChanged ( QTreeWidgetItem * ,int)), this, 
                             SLOT(onAutoWidgetCurrentItemChanged(QTreeWidgetItem * ,int)));
