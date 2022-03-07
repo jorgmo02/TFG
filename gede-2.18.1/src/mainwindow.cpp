@@ -271,11 +271,6 @@ void MainWindow::showWidgets()
     if(m_cfg.m_viewWindowStack)
         m_ui.tabWidget->insertTab(0, stackWidget, "Stack");
 
-// TODO quitar esto
-    // QTreeWidget *customWidget = m_ui.treeWidget_custom;
-    // if(m_cfg.m_viewWindowCustom)
-    //     m_ui.tabWidget->insertTab(0, customWidget, "Custom");
-
 //
     QTreeWidget *breakpointsWidget = m_ui.treeWidget_breakpoints;
     if(m_cfg.m_viewWindowBreakpoints)
@@ -413,7 +408,6 @@ void MainWindow::onViewAutoVariables()
 
 void MainWindow::onViewCustomVariables()
 {
-    std::cout << "MAINWINDOW::414: NO IMPLEMENTADO CON LA FUNCIONALIDAD CUSTOM" << std::endl;
       m_cfg.m_viewWindowCustomVariables = m_cfg.m_viewWindowCustomVariables ? false : true;
      
     showWidgets();

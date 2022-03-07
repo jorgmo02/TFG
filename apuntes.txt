@@ -42,6 +42,23 @@ Mirar para modificar el restore default view (mainwindow.cpp 224)
 HECHO
 // ----------------------------------------------------------------------------------
 
+core.cpp línea 1358: ICore_onStopped
+mirar donde se llama el ICore_onStopper y lo que ocurre cuando se llama
+(en realidad, mirar todos los ICore_)
+
+com.cpp -> GdbCom::dispatchResp() ~linea 1177
+
+tree.h parseGroup ~linea 98 (mirar definicion en cpp)
+
+mainwindow HEREDA de ICore así que hay que tocar esas implementaciones para añadir el metodo onMemoryChanged supongo
+
+mirar:
+	core.gdbRun(); gd.cpp ~linea 216
+	
+GdbCom::dispatchResponse, el listener es el mainwindow y parece que GdbCom reenvía la info al mainwindow
+
+// ----------------------------------------------------------------------------------
+
 En la ventana:
 	Una línea por región
 	2/3  columnas según si queda muy sobrecargado o no
@@ -89,6 +106,8 @@ mirar:
 			FILE* popen("pmap -x (pid)", "r")
 			- Uso el FILE* para leer la salida estandar de pmap -x (pid)
 			pclose(FILE*)
+			
+	el pid lo tengo en Core::m_pid, creo
 // ----------------------------------------------------------------------------------
 
 Mirar posibilidad de resaltar variable (adicional)

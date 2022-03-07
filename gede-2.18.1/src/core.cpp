@@ -1646,17 +1646,17 @@ void Core::onResult(Tree &tree)
                 else if(watch)
                 {
                     
-                watch->setValue(child->getChildDataString("value"));
-                QString inScopeStr = child->getChildDataString("in_scope");
-                if(inScopeStr == "true" || inScopeStr.isEmpty())
-                    watch->m_inScope = true;
-                else
-                    watch->m_inScope = false;
+                    watch->setValue(child->getChildDataString("value"));
+                    QString inScopeStr = child->getChildDataString("in_scope");
+                    if(inScopeStr == "true" || inScopeStr.isEmpty())
+                        watch->m_inScope = true;
+                    else
+                        watch->m_inScope = false;
 
-                
+                    
 
-                if (watch->getValue() == "{...}" && watch->hasChildren() == false)
-                    watch->m_hasChildren = true;
+                    if (watch->getValue() == "{...}" && watch->hasChildren() == false)
+                        watch->m_hasChildren = true;
                 
 //                printf("in_scope:%s -> %d\n", stringToCStr(inScopeStr), inScope);
 
