@@ -58,6 +58,11 @@ mirar:
 GdbCom::dispatchResponse, el listener es el mainwindow y parece que GdbCom reenvía la info al mainwindow
 
 // ----------------------------------------------------------------------------------
+Lo de connect es todo un sistema de mensajes, listeners y emitters.
+Mirar:
+	- com.cpp ~linea 119: m_process.write que hace? incluye el interprete ahi?
+
+// ----------------------------------------------------------------------------------
 
 En la ventana:
 	Una línea por región
