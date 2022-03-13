@@ -99,20 +99,6 @@ void CustomVarCtl::onContextMenu ( const QPoint &pos)
            
     // Add menu entries
     m_popupMenu.addSeparator();
-    
-    action = m_popupMenu.addAction("Display as dec");
-    action->setData(0);
-    connect(action, SIGNAL(triggered()), this, SLOT(onDisplayAsDec()));
-    action = m_popupMenu.addAction("Display as hex");
-    action->setData(0);
-    connect(action, SIGNAL(triggered()), this, SLOT(onDisplayAsHex()));
-    action = m_popupMenu.addAction("Display as bin");
-    action->setData(0);
-    connect(action, SIGNAL(triggered()), this, SLOT(onDisplayAsBin()));
-    action = m_popupMenu.addAction("Display as char");
-    action->setData(0);
-    connect(action, SIGNAL(triggered()), this, SLOT(onDisplayAsChar()));
-    m_popupMenu.addSeparator();
     action = m_popupMenu.addAction("Show memory");
     action->setData(0);
     connect(action, SIGNAL(triggered()), this, SLOT(onShowMemory()));

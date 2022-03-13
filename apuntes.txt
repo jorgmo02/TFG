@@ -58,10 +58,16 @@ mirar:
 GdbCom::dispatchResponse, el listener es el mainwindow y parece que GdbCom reenvía la info al mainwindow
 
 // ----------------------------------------------------------------------------------
+HECHO
 Lo de connect es todo un sistema de mensajes, listeners y emitters.
 Mirar:
 	- com.cpp ~linea 119: m_process.write que hace? incluye el interprete ahi?
-
+		- el interprete ya está abierto por defecto. Hace write en consola
+HECHO
+// ----------------------------------------------------------------------------------
+Mirar:
+	- core.cpp ~linea 600: gdbGetMemory es una pista para entender la informacion que se devuelve
+	- memorydialog.cpp ~linea 17: cuando se llama?
 // ----------------------------------------------------------------------------------
 
 En la ventana:
