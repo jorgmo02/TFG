@@ -75,6 +75,18 @@ Mirar:
 
 // ----------------------------------------------------------------------------------
 
+	- com.cpp ~linea 1177 se reenvían los mensajes. Hay que entender que hace cada tipo de mensaje
+	- Los mensajes se meten en la cola GdbCom::m_respQueue (com.cpp ~linea 907)
+	- Todo esto sucede cuando se llama a GdbCom::command (com.cpp ~linea 1063).
+	
+	- Posibilidad: crear, en GdbCom, un command nuevo que replique este funcionamiento pero sin comunicarse con gdb.
+					Después, crear, en Core, un gdbGetMemoryMap.
+					
+					
+	- memorywidget ~linea 167 es un ejemplo de como conseguir la info devuelta.
+
+// ----------------------------------------------------------------------------------
+
 En la ventana:
 	Una línea por región
 	2/3  columnas según si queda muy sobrecargado o no
