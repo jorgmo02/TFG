@@ -87,6 +87,10 @@ Mirar:
 
 // ----------------------------------------------------------------------------------
 
+	- autovarctl.cpp ~linea 371 se añade un nuevo cachivache a la lista de watch
+
+// ----------------------------------------------------------------------------------
+
 En la ventana:
 	Una línea por región
 	2/3  columnas según si queda muy sobrecargado o no
