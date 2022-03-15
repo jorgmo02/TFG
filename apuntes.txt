@@ -70,6 +70,11 @@ Mirar:
 	- memorydialog.cpp ~linea 17: cuando se llama?
 // ----------------------------------------------------------------------------------
 
+	- core.cpp ~linea 499 se reenvía la información a la MainWindow, y ella se encarga de enviársela a los widgets
+		- hay que hacer un ICore_onMiMensaje, tanto en la interfaz ICore como en en MainWindow, como en el CustomWidget
+
+// ----------------------------------------------------------------------------------
+
 En la ventana:
 	Una línea por región
 	2/3  columnas según si queda muy sobrecargado o no
