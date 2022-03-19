@@ -27,10 +27,6 @@ Settings::Settings()
     ,m_tcpPort(0)
 {
     m_viewWindowStack = true;
-    
-    // TODO quitar esto
-    // m_viewWindowCustom = true;
-    
     m_viewWindowThreads = true;
     m_viewWindowBreakpoints = true;
     m_viewWindowWatch = true;
@@ -437,9 +433,6 @@ void Settings::saveGlobalConfig()
     tmpIni.setByteArray("GuiState/Splitter4State", m_gui_splitter4State);
 
     tmpIni.setBool("GuiState/EnableWindowStack", m_viewWindowStack);
-    
-    // TODO quitar esto
-    // tmpIni.setBool("GuiState/EnableWindowCustom", m_viewWindowCustom);
     
     tmpIni.setBool("GuiState/EnableWindowThreads", m_viewWindowThreads);
     tmpIni.setBool("GuiState/EnableWindowBreakpoints", m_viewWindowBreakpoints);

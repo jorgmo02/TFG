@@ -1792,6 +1792,11 @@ void Core::onResult(Tree &tree)
             if(m_inf)
             {
                 m_inf->ICore_onLocalVarChanged(m_localVars);
+
+                // TODO AQUÍ VA EL CAT
+                m_inf->ICore_onMemoryMapChanged();
+                // TODO
+
             }
         }
         else if(rootName == "msg")

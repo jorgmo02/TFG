@@ -57,6 +57,7 @@ public:
 public:
     void ICore_onStopped(ICore::StopReason reason, QString path, int lineNo);
     void ICore_onLocalVarChanged(QStringList varNames);
+    void ICore_onMemoryMapChanged();
     void ICore_onWatchVarChanged(VarWatch &watch);
     void ICore_onConsoleStream(QString text);
     void ICore_onBreakpointsChanged();

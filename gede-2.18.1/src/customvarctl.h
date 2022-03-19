@@ -41,6 +41,8 @@ public:
 
     void ICore_onLocalVarChanged(QStringList varNames);
 
+    void ICore_onMemoryMapChanged();
+
     void onKeyPress(QKeyEvent *keyEvent);
 
     void ICore_onStateChanged(ICore::TargetState state);
