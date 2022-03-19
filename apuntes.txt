@@ -75,6 +75,10 @@ Mirar:
 
 // ----------------------------------------------------------------------------------
 
+CustomVarCtl::ICore_onLocalVarChanged es el que cambia los textos!!!!!!!!!!
+
+// ----------------------------------------------------------------------------------
+
 	- com.cpp ~linea 1177 se reenvían los mensajes. Hay que entender que hace cada tipo de mensaje
 	- Los mensajes se meten en la cola GdbCom::m_respQueue (com.cpp ~linea 907)
 	- Todo esto sucede cuando se llama a GdbCom::command (com.cpp ~linea 1063).

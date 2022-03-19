@@ -575,8 +575,7 @@ void AutoVarCtl::onDisplayAsChar()
 
 
 
-void 
-AutoVarCtl::onAutoWidgetCurrentItemChanged( QTreeWidgetItem * current, int column )
+void AutoVarCtl::onAutoWidgetCurrentItemChanged( QTreeWidgetItem * current, int column )
 {
     //QTreeWidget *varWidget = m_autoWidget;
     Core &core = Core::getInstance();
