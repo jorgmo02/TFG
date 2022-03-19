@@ -17,6 +17,8 @@
 #include "memorydialog.h"
 #include "autosignalblocker.h"
 
+#include <iostream>
+
 enum
 {
     COLUMN_NAME = 0,
@@ -163,6 +165,8 @@ void AutoVarCtl::onShowMemory()
 void AutoVarCtl::onAutoWidgetItemCollapsed(QTreeWidgetItem *item)
 {
     QString varPath = getTreeWidgetItemPath(item);
+    std::cout << "AutoVarCtl.cpp::onAutoWidgetItemCollapsed line 168" << varPath.toStdString() << std::endl;
+    
     if(m_autoVarDispInfo.contains(varPath))
     {
         VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];

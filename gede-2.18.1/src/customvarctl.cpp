@@ -101,7 +101,6 @@ void CustomVarCtl::onContextMenu ( const QPoint &pos)
 
            
     // Add menu entries
-    m_popupMenu.addSeparator();
     action = m_popupMenu.addAction("Show memory");
     action->setData(0);
     connect(action, SIGNAL(triggered()), this, SLOT(onShowMemory()));

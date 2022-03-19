@@ -77,6 +77,8 @@ Mirar:
 
 CustomVarCtl::ICore_onLocalVarChanged es el que cambia los textos!!!!!!!!!!
 
+CustomVarCtl::onAutoWidgetItemCollapsed es el que se encarga del comportamiento al expandir y colapsar
+
 // ----------------------------------------------------------------------------------
 
 	- com.cpp ~linea 1177 se reenvían los mensajes. Hay que entender que hace cada tipo de mensaje
