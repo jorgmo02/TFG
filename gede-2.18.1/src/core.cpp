@@ -629,6 +629,23 @@ int Core::gdbGetMemory(quint64 addr, size_t count, QByteArray *data)
 }
 
 
+int Core::gdbGetMemoryMap()
+{
+    GdbCom& com = GdbCom::getInstance();
+    Tree resultData;
+
+    int rc = 0;
+    QString cmdStr;
+    cmdStr.sprintf("shell pmap -x %u" , (unsigned int)m_pid);
+    // TODO puede que esto deba ser un write en lugar de un command
+    rc = com.command(&resultData, cmdStr);
+
+    // TODO hay que hacer algo más pero no se el qué aún
+
+    return rc;
+}
+
+
 /**
 * @brief Asks GDB for a list of source files.
 * @return true if any files was added or removed.
@@ -1793,10 +1810,8 @@ void Core::onResult(Tree &tree)
             {
                 m_inf->ICore_onLocalVarChanged(m_localVars);
 
-                // TODO AQUÍ VA EL CAT
+                // TODO AQUÍ DEBERÍA HABERSE PASADO LA INFO DE CORE::GDBGETMEMORYMAP
                 m_inf->ICore_onMemoryMapChanged();
-                // TODO
-
             }
         }
         else if(rootName == "msg")

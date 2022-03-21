@@ -93,7 +93,11 @@ CustomVarCtl::onAutoWidgetItemCollapsed es el que se encarga del comportamiento 
 
 // ----------------------------------------------------------------------------------
 
-	- autovarctl.cpp ~linea 371 se añade un nuevo cachivache a la lista de watch
+	- autovarctl.cpp ~linea 371 se añade un nuevo cachivache a la lista de watch	
+	
+// ----------------------------------------------------------------------------------
+
+	Mirar GdbCom::parseOutput (se llama desde GdbCom::readFromGdb, com.cpp ~linea 919)
 
 // ----------------------------------------------------------------------------------
 
@@ -131,10 +135,6 @@ tengo que hacer un gdbGetMemoryMap(), básicamente, en la clase Core y enlazarlo
 
 // ----------------------------------------------------------------------------------
 
-mirar GDB/MI pmap / popen.
-
-// ----------------------------------------------------------------------------------
-
 mirar:
 	- cat /proc/(pid)/maps
 		- Muestra todas las regiones + librerias
@@ -146,6 +146,8 @@ mirar:
 			pclose(FILE*)
 			
 	el pid lo tengo en Core::m_pid, creo
+	
+	para usarlo desde MI: shell <comando>
 // ----------------------------------------------------------------------------------
 
 Mirar posibilidad de resaltar variable (adicional)
