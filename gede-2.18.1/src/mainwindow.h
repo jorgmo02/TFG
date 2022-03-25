@@ -37,7 +37,7 @@ public:
 };
 
 #include "locator.h"
-
+#include <vector>
 
 class MainWindow : public QMainWindow, public ICore, public ICodeView, public ILogger
 {
@@ -57,7 +57,6 @@ public:
 public:
     void ICore_onStopped(ICore::StopReason reason, QString path, int lineNo);
     void ICore_onLocalVarChanged(QStringList varNames);
-    void ICore_onMemoryMapChanged();
     void ICore_onWatchVarChanged(VarWatch &watch);
     void ICore_onConsoleStream(QString text);
     void ICore_onBreakpointsChanged();
@@ -79,9 +78,9 @@ public:
     void ICodeView_onContextMenuIncFile(QPoint pos, int lineNo, QString incFile);
     
     void ICore_onWatchVarChildAdded(VarWatch &watch);
-    void ICore_onWatchVarDeleted(VarWatch &watch);
+    void ICore_onWatchVarDeleted(VarWatch &watch);    
     
-    
+    void ICore_onCoreMemChanged();
     
     void ILogger_onWarnMsg(QString text);
     void ILogger_onErrorMsg(QString text);
@@ -90,6 +89,7 @@ public:
 
     
 private:
+
     void showEvent(QShowEvent *);
     void closeEvent(QCloseEvent *e);
 

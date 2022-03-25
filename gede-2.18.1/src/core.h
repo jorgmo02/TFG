@@ -154,6 +154,7 @@ class CoreMemRegion
 {
 public:
     CoreMemRegion();
+    CoreMemRegion(QString str);
     virtual ~CoreMemRegion();
 
     quint64 getPointerAddress() { return m_address; };
@@ -165,6 +166,16 @@ public:
     void setSize(quint64 size) {m_size = size;};
     
     void loadFromGdbString(QString data);
+
+    bool operator==(const CoreMemRegion& other) {
+        return m_address == other.m_address &&
+                m_size == other.m_size;
+    }
+
+    bool operator!=(const CoreMemRegion& other){
+        return m_address != other.m_address ||
+                m_size != other.m_size;
+    }
 
 private:
     void clear();
@@ -204,7 +215,6 @@ class ICore
     virtual void ICore_onStateChanged(TargetState state) = 0;
     virtual void ICore_onSignalReceived(QString signalName) = 0;
     virtual void ICore_onLocalVarChanged(QStringList varNames) = 0;
-    virtual void ICore_onMemoryMapChanged() = 0;
     virtual void ICore_onFrameVarReset() = 0;
     virtual void ICore_onFrameVarChanged(QString name, QString value) = 0;
     virtual void ICore_onWatchVarChanged(VarWatch &watch) = 0;
@@ -220,6 +230,7 @@ class ICore
     virtual void ICore_onSourceFileListChanged() = 0;
     virtual void ICore_onSourceFileChanged(QString filename) = 0;
 
+    virtual void ICore_onCoreMemChanged() = 0;
     /**
      * @brief Called when a new child item has been added for a watched item.
      * @param watchId    The watchId of the new child.
@@ -227,7 +238,6 @@ class ICore
      * @param valueString  The value of the child.
      */
     virtual void ICore_onWatchVarChildAdded(VarWatch &watch) = 0;
-    
 };
 
 
@@ -303,7 +313,7 @@ public:
     int gdbExpandVarWatchChildren(QString watchId);
     int gdbGetMemory(quint64 addr, size_t count, QByteArray *data);
 
-    int gdbGetMemoryMap(QByteArray *data);
+    QStringList gdbGetMemoryMap();
     
     void selectThread(int threadId);
     void selectFrame(int selectedFrameIdx);

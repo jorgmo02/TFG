@@ -21,6 +21,8 @@
 #include "version.h"
 
 
+#include <iostream>
+
 
 const char* GdbCom::asyncClassToString(GdbComListener::AsyncClass ac)
 {
@@ -952,54 +954,55 @@ int GdbCom::readFromGdb(GdbResult *m_result, Tree *m_resultData)
     {
         *m_result = GDB_DONE;
     
-    do
-    {
-        
-        // Parse any data received from GDB
         do
         {
-            resp = parseOutput();
-            if(resp == NULL)
+            
+            // Parse any data received from GDB
+            do
             {
-                if(!m_process.waitForReadyRead(100))
+                // TODO esto se come el output, hay que evitarlo
+                resp = parseOutput();
+                if(resp == NULL)
                 {
-                    QProcess::ProcessState  state = m_process.state();
-                    if(state == QProcess::NotRunning)
+                    if(!m_process.waitForReadyRead(100))
                     {
-                        assert(0);
-                        
-                        rc = -1;
+                        QProcess::ProcessState  state = m_process.state();
+                        if(state == QProcess::NotRunning)
+                        {
+                            assert(0);
+                            
+                            rc = -1;
+                        }
                     }
                 }
-            }
-        }while(resp == NULL && rc == 0);
-       
+            }while(resp == NULL && rc == 0);
         
-        while(!m_freeTokens.isEmpty())
-        {
-            Token *token = m_freeTokens.takeFirst();
-            delete token;
-        }
-
-
-        if(resp != NULL)
-            m_respQueue.push_back(resp);
-
-        
-        if(resp != NULL && resp->getType() == Resp::RESULT)
-        {
-            assert(m_resultData != NULL);
             
-            if(m_result)
-                *m_result = resp->m_result;
-            m_resultData->copy(resp->tree);
-        }
+            while(!m_freeTokens.isEmpty())
+            {
+                Token *token = m_freeTokens.takeFirst();
+                delete token;
+            }
 
-    }while(m_result != NULL && resp != NULL && resp->getType() != Resp::TERMINATION);
 
-    if(resp == NULL && m_result != NULL)
-        *m_result = GDB_ERROR;
-}
+            if(resp != NULL)
+                m_respQueue.push_back(resp);
+
+            
+            if(resp != NULL && resp->getType() == Resp::RESULT)
+            {
+                assert(m_resultData != NULL);
+                
+                if(m_result)
+                    *m_result = resp->m_result;
+                m_resultData->copy(resp->tree);
+            }
+
+        } while(m_result != NULL && resp != NULL && resp->getType() != Resp::TERMINATION);
+
+        if(resp == NULL && m_result != NULL)
+            *m_result = GDB_ERROR;
+    }
 
     //  debugMsg("# ---<< \n");
 

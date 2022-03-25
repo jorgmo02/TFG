@@ -107,7 +107,7 @@ void TreeNode::dump(int parentCnt)
     for(int i = 0;i < parentCnt;i++)
         text  = "    " + text;
     debugMsg("%s", stringToCStr(text));
-    std::cout << stringToCStr(text) << std::endl;
+    std::cout << "Tree dump: " << stringToCStr(text) << std::endl;
     for(int i = 0;i < (int)m_children.size();i++)
     {
         TreeNode *node = m_children[i];

@@ -561,10 +561,22 @@ void MainWindow::ICore_onStopped(ICore::StopReason reason, QString path, int lin
     
     updateCurrentLine(path, lineNo);
     
-
     fillInStack();
 }
 
+void MainWindow::ICore_onCoreMemChanged()
+{
+    m_customVarCtl.clear();
+
+    Core &core = Core::getInstance();
+    QStringList regions = core.gdbGetMemoryMap();
+    std::cout << "onCoreMemChanged" << std::endl;
+    for(int i = 0; i < regions.size(); i++)
+    {
+        CoreMemRegion reg(regions[i]);
+        m_customVarCtl.ICore_onCoreMemChanged(reg);
+    }
+}
 
 
 /**
@@ -793,12 +805,6 @@ void MainWindow::ICore_onLocalVarChanged(QStringList varNames)
     m_autoVarCtl.ICore_onLocalVarChanged(varNames);
 }
 
-void MainWindow::ICore_onMemoryMapChanged()
-{
-    m_customVarCtl.ICore_onMemoryMapChanged();
-}
-
-
 void MainWindow::ICore_onWatchVarDeleted(VarWatch &watch)
 {
     m_watchVarCtl.ICore_onWatchVarDeleted(watch);
@@ -809,7 +815,6 @@ void MainWindow::ICore_onWatchVarChanged(VarWatch &watch)
 {
     m_watchVarCtl.ICore_onWatchVarChanged(watch);
     m_autoVarCtl.ICore_onWatchVarChanged(watch);
-    m_customVarCtl.ICore_onWatchVarChanged(watch);
 }
 
 
@@ -1995,11 +2000,10 @@ void MainWindow::ICore_onSignalReceived(QString signalName)
 
 }
 
+// redireccion de la salida estandar del programa que se esta depurando
 void MainWindow::ICore_onTargetOutput(QString message)
 {
-
     m_ui.targetOutputView->appendLog(message);
-    
 }
 
 

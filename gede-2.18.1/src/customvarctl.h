@@ -31,41 +31,24 @@ public:
     
     void setWidget(QTreeWidget *autoWidget);
 
-    void ICore_onWatchVarChanged(VarWatch &watch);
-    void ICore_onCustomVarChildAdded(CoreMemRegion &region);
-    void addNewWatch(QString varName);
-
-
     void setConfig(Settings *cfg);
 
-    void ICore_onLocalVarChanged(QStringList varNames);
-
-    void ICore_onMemoryMapChanged();
-
     void ICore_onStateChanged(ICore::TargetState state);
-private:
-    QTreeWidgetItem* priv_findItemByWatchId(QString watchId);
-    quint64 getAddress(VarWatch &w);
-    QString getWatchId(QTreeWidgetItem* item);
-
-    void selectedChangeDisplayFormat(VarCtl::DispFormat fmt);
-    QString getTreeWidgetItemPath(QTreeWidgetItem *item);
-
-    QString getDisplayString(QString watchId, QString varPath);
+    void ICore_onCoreMemChanged(CoreMemRegion &region);
     
-    
+    void clear();
 public slots:
     void onAutoWidgetItemDoubleClicked(QTreeWidgetItem *item, int column);
-    void onAutoWidgetCurrentItemChanged ( QTreeWidgetItem * current, int column );
     void onAutoWidgetItemExpanded(QTreeWidgetItem *item );
     void onAutoWidgetItemCollapsed(QTreeWidgetItem *item);
 
 private:
-    void clear();
+    QString getWatchMemPos(QTreeWidgetItem* item);
+
+    QString getTreeWidgetItemPath(QTreeWidgetItem *item);
 
 private:
     QTreeWidget *m_customWidget;
-    QMenu m_popupMenu;
     
     VarCtl::DispInfoMap m_customVarDispInfo;
     Settings m_cfg;

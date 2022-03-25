@@ -332,7 +332,7 @@ void AutoVarCtl::ICore_onWatchVarChildAdded(VarWatch &watch)
     //
     QTreeWidgetItem * rootItem = varWidget->invisibleRootItem();
     
-    std::cout << stringToCStr(watchId) << std::endl;
+    std::cout << "autovarctl line 335::" << stringToCStr(watchId) << std::endl;
     QStringList watchIdParts = watchId.split('.');
     
     QString thisWatchId;

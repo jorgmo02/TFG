@@ -30,6 +30,8 @@
 #include "log.h"
 #include "gdbmiparser.h"
 
+#include <iostream>
+
 
 VarWatch::VarWatch()
     : m_inScope(true)
@@ -65,6 +67,11 @@ CoreMemRegion::CoreMemRegion() :
 {
 }
 
+CoreMemRegion::CoreMemRegion(QString str)
+{
+    loadFromGdbString(str);
+}
+
 CoreMemRegion::~CoreMemRegion() {
     clear();
 }
@@ -72,6 +79,17 @@ CoreMemRegion::~CoreMemRegion() {
 void CoreMemRegion::loadFromGdbString(QString data)
 {
     // TODO
+    
+    std::cout << "DATA: " << stringToCStr(data) << std::endl;
+
+    QStringList dataSplit = data.split(" ");
+    m_address = dataSplit[0].toUInt(NULL, 16);
+    m_backupfile = dataSplit[1];
+    m_size = dataSplit[2].toUInt(NULL, 16);
+    
+    std::cout << "ADDRESS: " << stringToCStr(QString::number(m_address)) << std::endl;
+    std::cout << "BACKUPFILE: " << stringToCStr(m_backupfile) << std::endl;
+    std::cout << "SIZE: " << stringToCStr(QString::number(m_size)) << std::endl;
 }
 
 void CoreMemRegion::clear()
@@ -628,7 +646,6 @@ int Core::gdbGetMemory(quint64 addr, size_t count, QByteArray *data)
     
     rc = com.command(&resultData, cmdStr);
 
-
     QString dataStr = resultData.getString("/memory/1/contents");
     if(!dataStr.isEmpty())
     {
@@ -648,8 +665,7 @@ int Core::gdbGetMemory(quint64 addr, size_t count, QByteArray *data)
     return rc;
 }
 
-
-int Core::gdbGetMemoryMap(QByteArray *data)
+QStringList Core::gdbGetMemoryMap()
 {
     GdbCom& com = GdbCom::getInstance();
     Tree resultData;
@@ -659,10 +675,13 @@ int Core::gdbGetMemoryMap(QByteArray *data)
     cmdStr.sprintf("info proc mappings %u" , (unsigned int)m_pid);
     
     rc = com.command(&resultData, cmdStr);
+    std::cout << "COMMAND RESULT: " << rc << std::endl;
 
     resultData.dump();
 
-    // TODO hay que coger aquí lo que me interesa del resultado de command
+    QStringList list = {"0x0 ASEREJE 2", "0x1 LELE 3"};
+
+    // TODO hay que coger aquí lo que me interesa del resultado de command Y GUARDARLO EN UN SITIO AUXILIAR
     // QString dataStr = resultData.getString("/memory/1/contents");
     // if(!dataStr.isEmpty())
     // {
@@ -679,8 +698,7 @@ int Core::gdbGetMemoryMap(QByteArray *data)
     //     }
     // }
 
-
-    return rc;
+    return list;
 }
 
 
@@ -1425,6 +1443,7 @@ void Core::onExecAsyncOut(Tree &tree, AsyncClass ac)
                 m_inf->ICore_onStopped(reason, p, lineNo);
 
             m_inf->ICore_onFrameVarReset();
+            m_inf->ICore_onCoreMemChanged();
 
 
             TreeNode *argsNode = tree.findChild("frame/args");
@@ -1794,6 +1813,7 @@ void Core::onResult(Tree &tree)
                 m_inf->ICore_onStopped(reason, p, lineNo);
 
                 m_inf->ICore_onFrameVarReset();
+                m_inf->ICore_onCoreMemChanged();
 
                 TreeNode *argsNode = rootNode->findChild("args");
                 if(argsNode)
@@ -1847,9 +1867,6 @@ void Core::onResult(Tree &tree)
             if(m_inf)
             {
                 m_inf->ICore_onLocalVarChanged(m_localVars);
-
-                // TODO AQUÍ DEBERÍA HABERSE PASADO LA INFO DE CORE::GDBGETMEMORYMAP
-                m_inf->ICore_onMemoryMapChanged();
             }
         }
         else if(rootName == "msg")
