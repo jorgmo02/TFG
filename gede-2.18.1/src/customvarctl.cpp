@@ -68,8 +68,8 @@ void CustomVarCtl::setWidget(QTreeWidget *autoWidget)
     m_customWidget->setColumnWidth(MEMORY_POS, 120);
     m_customWidget->setColumnWidth(BACKUP_FILE, 140);
     QStringList names;
-    names += "Memory position";
-    names += "Backup file";
+    names += "Memory start";
+    names += "Objfile";
     names += "Size";
     m_customWidget->setHeaderLabels(names);
     connect(m_customWidget, SIGNAL(itemDoubleClicked ( QTreeWidgetItem * , int  )), this,
@@ -91,7 +91,6 @@ void CustomVarCtl::onAutoWidgetItemCollapsed(QTreeWidgetItem *item)
         VarCtl::DispInfo &dispInfo = m_customVarDispInfo[varPath];
         dispInfo.isExpanded = false;
     }
-
 }
 
 

@@ -79,17 +79,10 @@ CoreMemRegion::~CoreMemRegion() {
 void CoreMemRegion::loadFromGdbString(QString data)
 {
     // TODO
-    
-    std::cout << "DATA: " << stringToCStr(data) << std::endl;
-
     QStringList dataSplit = data.split(" ");
     m_address = dataSplit[0].toUInt(NULL, 16);
     m_backupfile = dataSplit[1];
     m_size = dataSplit[2].toUInt(NULL, 16);
-    
-    std::cout << "ADDRESS: " << stringToCStr(QString::number(m_address)) << std::endl;
-    std::cout << "BACKUPFILE: " << stringToCStr(m_backupfile) << std::endl;
-    std::cout << "SIZE: " << stringToCStr(QString::number(m_size)) << std::endl;
 }
 
 void CoreMemRegion::clear()
@@ -675,7 +668,6 @@ QStringList Core::gdbGetMemoryMap()
     cmdStr.sprintf("info proc mappings %u" , (unsigned int)m_pid);
     
     rc = com.command(&resultData, cmdStr);
-    std::cout << "COMMAND RESULT: " << rc << std::endl;
 
     resultData.dump();
 

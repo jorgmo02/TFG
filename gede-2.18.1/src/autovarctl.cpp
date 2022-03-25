@@ -165,7 +165,6 @@ void AutoVarCtl::onShowMemory()
 void AutoVarCtl::onAutoWidgetItemCollapsed(QTreeWidgetItem *item)
 {
     QString varPath = getTreeWidgetItemPath(item);
-    std::cout << "AutoVarCtl.cpp::onAutoWidgetItemCollapsed line 168" << varPath.toStdString() << std::endl;
     
     if(m_autoVarDispInfo.contains(varPath))
     {
@@ -332,7 +331,6 @@ void AutoVarCtl::ICore_onWatchVarChildAdded(VarWatch &watch)
     //
     QTreeWidgetItem * rootItem = varWidget->invisibleRootItem();
     
-    std::cout << "autovarctl line 335::" << stringToCStr(watchId) << std::endl;
     QStringList watchIdParts = watchId.split('.');
     
     QString thisWatchId;

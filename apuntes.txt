@@ -154,5 +154,14 @@ Mirar posibilidad de resaltar variable (adicional)
 
 // ----------------------------------------------------------------------------------
 
+mirar:
+	- info files + pmap + cat /proc/(pid)/maps tengo toda la información sobre
+		ficheros de respaldo, permisos, posiciones de memoria
+	
+	- info files funciona cuando ya estas depurando un programa, no hay que poner pid
+		ni nada
+		
+	- consultar documentación 
+
 
 

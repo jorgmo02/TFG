@@ -570,7 +570,6 @@ void MainWindow::ICore_onCoreMemChanged()
 
     Core &core = Core::getInstance();
     QStringList regions = core.gdbGetMemoryMap();
-    std::cout << "onCoreMemChanged" << std::endl;
     for(int i = 0; i < regions.size(); i++)
     {
         CoreMemRegion reg(regions[i]);

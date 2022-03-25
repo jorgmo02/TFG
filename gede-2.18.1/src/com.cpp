@@ -791,12 +791,21 @@ Resp *GdbCom::parseOutput()
 {
     Resp *resp = NULL;
     
+
     if(isTokenPending())
+    {
         resp = parseOutOfBandRecord();
+        if(resp)
+            std::cout << "Resp1: " << stringToCStr(resp->getString()) << std::endl; 
+    }
 
     if(isTokenPending() && resp == NULL)
+    {
         resp = parseResultRecord();
-            
+        if(resp)
+            std::cout << "Resp2: " << stringToCStr(resp->getString()) << std::endl; 
+    }
+
     if(isTokenPending() && resp == NULL)
     {
         resp = new Resp;
@@ -919,6 +928,8 @@ int GdbCom::readFromGdb(GdbResult *m_result, Tree *m_resultData)
         
         // Parse any data received from GDB
         resp = parseOutput();
+
+        // resp es null cuando es la última línea de la salida de un comando
         if(resp == NULL)
         {
             if(!m_process.waitForReadyRead(100))
@@ -1179,7 +1190,6 @@ void GdbCom::onReadyReadStandardOutput ()
 
 void GdbCom::dispatchResp()
 {
-    
     // Dispatch the response
     while(!m_respQueue.isEmpty())
     {
@@ -1205,8 +1215,7 @@ void GdbCom::dispatchResp()
         }
         delete resp;
     }
-
-}
+ }
 
 void GdbCom::enableLog(bool enable)
 {
