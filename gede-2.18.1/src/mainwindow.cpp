@@ -803,7 +803,6 @@ void MainWindow::ICore_onWatchVarDeleted(VarWatch &watch)
 {
     m_watchVarCtl.ICore_onWatchVarDeleted(watch);
     m_autoVarCtl.ICore_onWatchVarDeleted(watch);
-    m_customVarCtl.ICore_onWatchVarDeleted(watch);
 }
 
 void MainWindow::ICore_onWatchVarChanged(VarWatch &watch)
@@ -818,7 +817,6 @@ void MainWindow::ICore_onWatchVarChildAdded(VarWatch &watch)
 {
     m_watchVarCtl.ICore_onWatchVarChildAdded(watch);
     m_autoVarCtl.ICore_onWatchVarChildAdded(watch);
-    m_customVarCtl.ICore_onWatchVarChildAdded(watch);
 }
 
 

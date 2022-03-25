@@ -147,6 +147,35 @@ class VarWatch
 };
 
 
+/**
+ * @brief The parameters of a memory region.
+ */
+class CoreMemRegion
+{
+public:
+    CoreMemRegion();
+    virtual ~CoreMemRegion();
+
+    quint64 getPointerAddress() { return m_address; };
+    QString getBackupFile() const { return m_backupfile; };
+    quint64 getSize() { return m_size; };
+
+    void setPointerAddress(quint64 addr) { m_address = addr; };
+    void setBackupFile(QString backupfile) { m_backupfile = backupfile; };
+    void setSize(quint64 size) {m_size = size;};
+    
+    void loadFromGdbString(QString data);
+
+private:
+    void clear();
+
+private:
+
+    quint64 m_address; //!< The address of data the variable points to.
+    QString m_backupfile;
+    quint64 m_size;
+};
+
 
 class ICore
 {
@@ -274,7 +303,7 @@ public:
     int gdbExpandVarWatchChildren(QString watchId);
     int gdbGetMemory(quint64 addr, size_t count, QByteArray *data);
 
-    int gdbGetMemoryMap();
+    int gdbGetMemoryMap(QByteArray *data);
     
     void selectThread(int threadId);
     void selectFrame(int selectedFrameIdx);

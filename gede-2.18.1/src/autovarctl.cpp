@@ -331,7 +331,10 @@ void AutoVarCtl::ICore_onWatchVarChildAdded(VarWatch &watch)
 
     //
     QTreeWidgetItem * rootItem = varWidget->invisibleRootItem();
+    
+    std::cout << stringToCStr(watchId) << std::endl;
     QStringList watchIdParts = watchId.split('.');
+    
     QString thisWatchId;
 
 
@@ -671,70 +674,70 @@ void AutoVarCtl::addNewWatch(QString varName)
     //debugMsg("%s('%s')", __func__, stringToCStr(varName));
 
 
-        VarWatch *watch = NULL;
-        if(core.gdbAddVarWatch(newName, &watch) == 0)
-        {
-            QString watchId = watch->getWatchId();
-            QString varType = watch->getVarType();
+    VarWatch *watch = NULL;
+    if(core.gdbAddVarWatch(newName, &watch) == 0)
+    {
+        QString watchId = watch->getWatchId();
+        QString varType = watch->getVarType();
 
-            bool hasChildren = watch->hasChildren();
+        bool hasChildren = watch->hasChildren();
 
-    QTreeWidget *varWidget = m_autoWidget;
+        QTreeWidget *varWidget = m_autoWidget;
 
 // Create a new dummy item
-            QTreeWidgetItem *item;
-            QStringList names;
-            names += varName;
-            item = new QTreeWidgetItem(names);
-            item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
-            varWidget->addTopLevelItem(item);
+        QTreeWidgetItem *item;
+        QStringList names;
+        names += varName;
+        item = new QTreeWidgetItem(names);
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+        varWidget->addTopLevelItem(item);
 
 
-            QTreeWidgetItem *current = item;
-            
-
-            
-            if(hasChildren)
-                current->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
-
-            QString varPath = getTreeWidgetItemPath(current);
-            QString value  = getDisplayString(watchId, varPath);
-            if(!m_autoVarDispInfo.contains(varPath))
-            {
-                VarCtl::DispInfo newDispInfo;
-                newDispInfo.dispFormat = DISP_NATIVE;
-
-                debugMsg("Adding '%s'", stringToCStr(varPath));
-                m_autoVarDispInfo[varPath] = newDispInfo;
-            }
-
-            VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
-                
+        QTreeWidgetItem *current = item;
         
-            current->setData(DATA_COLUMN, Qt::UserRole, watchId);
-            current->setText(COLUMN_VALUE, value);
-            current->setText(COLUMN_TYPE, varType);
 
-            // Set color based on if the value has changed
-            QBrush b;
-            if(dispInfo.lastData != value)
-                b = QBrush(Qt::red);
-            else
-                b = m_textColor;
-            current->setForeground(COLUMN_VALUE,b);
-            dispInfo.lastData = value;
+        
+        if(hasChildren)
+            current->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
 
-            
-
-    //
-    if(m_autoVarDispInfo.contains(varPath))
-    {
-        if(m_autoVarDispInfo[varPath].isExpanded)
+        QString varPath = getTreeWidgetItemPath(current);
+        QString value  = getDisplayString(watchId, varPath);
+        if(!m_autoVarDispInfo.contains(varPath))
         {
-            m_autoWidget->expandItem(current);
+            VarCtl::DispInfo newDispInfo;
+            newDispInfo.dispFormat = DISP_NATIVE;
+
+            debugMsg("Adding '%s'", stringToCStr(varPath));
+            m_autoVarDispInfo[varPath] = newDispInfo;
+        }
+
+        VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
+            
+    
+        current->setData(DATA_COLUMN, Qt::UserRole, watchId);
+        current->setText(COLUMN_VALUE, value);
+        current->setText(COLUMN_TYPE, varType);
+
+        // Set color based on if the value has changed
+        QBrush b;
+        if(dispInfo.lastData != value)
+            b = QBrush(Qt::red);
+        else
+            b = m_textColor;
+        current->setForeground(COLUMN_VALUE,b);
+        dispInfo.lastData = value;
+
+        
+
+        //
+        if(m_autoVarDispInfo.contains(varPath))
+        {
+            if(m_autoVarDispInfo[varPath].isExpanded)
+            {
+                m_autoWidget->expandItem(current);
+            }
         }
     }
-        }
 
 }
 

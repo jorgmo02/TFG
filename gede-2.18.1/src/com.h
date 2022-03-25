@@ -124,7 +124,7 @@ class Resp
 {
     public:
         Resp() : m_type(UNKNOWN) {};
-
+                
         typedef enum {
             UNKNOWN = 0,
             RESULT,

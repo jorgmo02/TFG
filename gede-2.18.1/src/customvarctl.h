@@ -32,8 +32,7 @@ public:
     void setWidget(QTreeWidget *autoWidget);
 
     void ICore_onWatchVarChanged(VarWatch &watch);
-    void ICore_onWatchVarChildAdded(VarWatch &watch);
-    void ICore_onWatchVarDeleted(VarWatch &watch);
+    void ICore_onCustomVarChildAdded(CoreMemRegion &region);
     void addNewWatch(QString varName);
 
 
@@ -42,8 +41,6 @@ public:
     void ICore_onLocalVarChanged(QStringList varNames);
 
     void ICore_onMemoryMapChanged();
-
-    void onKeyPress(QKeyEvent *keyEvent);
 
     void ICore_onStateChanged(ICore::TargetState state);
 private:
@@ -63,23 +60,14 @@ public slots:
     void onAutoWidgetItemExpanded(QTreeWidgetItem *item );
     void onAutoWidgetItemCollapsed(QTreeWidgetItem *item);
 
-    void onContextMenu ( const QPoint &pos);
-    void onShowMemory();
-
-
-    void onDisplayAsDec();
-    void onDisplayAsHex();
-    void onDisplayAsBin();
-    void onDisplayAsChar();
-
 private:
     void clear();
 
 private:
-    QTreeWidget *m_autoWidget;
+    QTreeWidget *m_customWidget;
     QMenu m_popupMenu;
     
-    VarCtl::DispInfoMap m_autoVarDispInfo;
+    VarCtl::DispInfoMap m_customVarDispInfo;
     Settings m_cfg;
     QColor m_textColor; //!< Color to use for text in the widget
 };

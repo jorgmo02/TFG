@@ -58,6 +58,26 @@ void VarWatch::setValue(QString value)
     m_var.valueFromGdbString(value);
 }
 
+CoreMemRegion::CoreMemRegion() :
+    m_address(0),
+    m_backupfile(""),
+    m_size(0) 
+{
+}
+
+CoreMemRegion::~CoreMemRegion() {
+    clear();
+}
+
+void CoreMemRegion::loadFromGdbString(QString data)
+{
+    // TODO
+}
+
+void CoreMemRegion::clear()
+{
+}
+
 
 CoreVar::CoreVar()
  : m_address(0)
@@ -629,18 +649,36 @@ int Core::gdbGetMemory(quint64 addr, size_t count, QByteArray *data)
 }
 
 
-int Core::gdbGetMemoryMap()
+int Core::gdbGetMemoryMap(QByteArray *data)
 {
     GdbCom& com = GdbCom::getInstance();
     Tree resultData;
 
     int rc = 0;
     QString cmdStr;
-    cmdStr.sprintf("shell pmap -x %u" , (unsigned int)m_pid);
-    // TODO puede que esto deba ser un write en lugar de un command
+    cmdStr.sprintf("info proc mappings %u" , (unsigned int)m_pid);
+    
     rc = com.command(&resultData, cmdStr);
 
-    // TODO hay que hacer algo más pero no se el qué aún
+    resultData.dump();
+
+    // TODO hay que coger aquí lo que me interesa del resultado de command
+    // QString dataStr = resultData.getString("/memory/1/contents");
+    // if(!dataStr.isEmpty())
+    // {
+    //     data->clear();
+
+    //     QByteArray dataByteArray = dataStr.toLocal8Bit();
+    //     const char *dataCStr = dataByteArray.constData();
+    //     int dataCStrLen = strlen(dataCStr);
+    //     for(int i = 0;i+1 < dataCStrLen;i+=2)
+    //     {
+    //         unsigned char dataByte = hexStringToU8(dataCStr+i);
+            
+    //         data->push_back(dataByte);
+    //     }
+    // }
+
 
     return rc;
 }

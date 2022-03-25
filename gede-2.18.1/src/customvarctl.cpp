@@ -30,7 +30,7 @@ enum
 
 
 CustomVarCtl::CustomVarCtl()
-    : m_autoWidget(0)
+    : m_customWidget(0)
     ,m_textColor(Qt::black)
 {
 
@@ -41,9 +41,9 @@ CustomVarCtl::CustomVarCtl()
 void CustomVarCtl::ICore_onStateChanged(ICore::TargetState state)
 {
     if(state == ICore::TARGET_STARTING || state == ICore::TARGET_RUNNING)
-        m_autoWidget->setEnabled(false);
+        m_customWidget->setEnabled(false);
     else
-        m_autoWidget->setEnabled(true);
+        m_customWidget->setEnabled(true);
     
 }
     
@@ -59,56 +59,31 @@ QString CustomVarCtl::getTreeWidgetItemPath(QTreeWidgetItem *item)
 
 void CustomVarCtl::setWidget(QTreeWidget *autoWidget)
 {
-    m_autoWidget = autoWidget;
+    m_customWidget = autoWidget;
 
     m_textColor = autoWidget->palette().color(QPalette::WindowText);
     
         //
-    m_autoWidget->setColumnCount(3);
-    m_autoWidget->setColumnWidth(COLUMN_NAME, 120);
-    m_autoWidget->setColumnWidth(COLUMN_VALUE, 140);
+    m_customWidget->setColumnCount(3);
+    m_customWidget->setColumnWidth(COLUMN_NAME, 120);
+    m_customWidget->setColumnWidth(COLUMN_VALUE, 140);
     QStringList names;
     names += "Memory position";
     names += "Backup file";
     names += "Size";
-    m_autoWidget->setHeaderLabels(names);
-    connect(m_autoWidget, SIGNAL(itemChanged ( QTreeWidgetItem * ,int)), this, 
+    m_customWidget->setHeaderLabels(names);
+    connect(m_customWidget, SIGNAL(itemChanged ( QTreeWidgetItem * ,int)), this, 
                             SLOT(onAutoWidgetCurrentItemChanged(QTreeWidgetItem * ,int)));
-    connect(m_autoWidget, SIGNAL(itemDoubleClicked ( QTreeWidgetItem * , int  )), this,
+    connect(m_customWidget, SIGNAL(itemDoubleClicked ( QTreeWidgetItem * , int  )), this,
                             SLOT(onAutoWidgetItemDoubleClicked(QTreeWidgetItem *, int )));
-    connect(m_autoWidget, SIGNAL(itemExpanded ( QTreeWidgetItem * )), this,
+    connect(m_customWidget, SIGNAL(itemExpanded ( QTreeWidgetItem * )), this,
                             SLOT(onAutoWidgetItemExpanded(QTreeWidgetItem * )));
-    connect(m_autoWidget, SIGNAL(itemCollapsed ( QTreeWidgetItem *  )), this,
+    connect(m_customWidget, SIGNAL(itemCollapsed ( QTreeWidgetItem *  )), this,
                             SLOT(onAutoWidgetItemCollapsed(QTreeWidgetItem * )));
 
-    m_autoWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_autoWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onContextMenu(const QPoint&)));
-
-
-
+    m_customWidget->setContextMenuPolicy(Qt::NoContextMenu);
 
 }
-
-
-/**
- * @brief Called when the user right clicks anywhere.
- */
-void CustomVarCtl::onContextMenu ( const QPoint &pos)
-{
-    QAction *action = NULL;
-
-    m_popupMenu.clear();
-
-           
-    // Add menu entries
-    action = m_popupMenu.addAction("Show memory");
-    action->setData(0);
-    connect(action, SIGNAL(triggered()), this, SLOT(onShowMemory()));
-
-        
-    m_popupMenu.popup(m_autoWidget->mapToGlobal(pos));
-}
-
 
 /**
  * @brief Returns the address of the data the variable points to or the actual variable.
@@ -123,37 +98,12 @@ quint64 CustomVarCtl::getAddress(VarWatch &w)
     return core.getAddress(w);
 }
 
-void CustomVarCtl::onShowMemory()
-{
-    QList<QTreeWidgetItem *> selectedItems = m_autoWidget->selectedItems();
-    Core &core = Core::getInstance();
-    if(!selectedItems.empty())
-    {
-        QTreeWidgetItem *item = selectedItems[0];
-
-        QString watchId = getWatchId(item);
-        VarWatch *watch = NULL;
-        if(!watchId.isEmpty())
-            watch = core.getVarWatchInfo(watchId);
-        if(watch)
-        {
-            
-            MemoryDialog dlg;
-            dlg.setConfig(&m_cfg);
-            dlg.setStartAddress(getAddress(*watch));
-            dlg.exec();
-        }
-    }
-        
-}
-
-
 void CustomVarCtl::onAutoWidgetItemCollapsed(QTreeWidgetItem *item)
 {
     QString varPath = getTreeWidgetItemPath(item);
-    if(m_autoVarDispInfo.contains(varPath))
+    if(m_customVarDispInfo.contains(varPath))
     {
-        VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
+        VarCtl::DispInfo &dispInfo = m_customVarDispInfo[varPath];
         dispInfo.isExpanded = false;
     }
 
@@ -164,9 +114,9 @@ void CustomVarCtl::onAutoWidgetItemExpanded(QTreeWidgetItem *item)
 {
     QString varPath = getTreeWidgetItemPath(item);
     debugMsg("%s(varPath:'%s')", __func__, stringToCStr(varPath));
-    if(m_autoVarDispInfo.contains(varPath))
+    if(m_customVarDispInfo.contains(varPath))
     {
-        VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
+        VarCtl::DispInfo &dispInfo = m_customVarDispInfo[varPath];
         dispInfo.isExpanded = true;
 
     }
@@ -174,7 +124,7 @@ void CustomVarCtl::onAutoWidgetItemExpanded(QTreeWidgetItem *item)
     assert(0);
 
     Core &core = Core::getInstance();
-    //QTreeWidget *varWidget = m_autoWidget;
+    //QTreeWidget *varWidget = m_customWidget;
 
     // Get watchid of the item
     QString watchId = getWatchId(item);
@@ -190,21 +140,21 @@ void CustomVarCtl::onAutoWidgetItemExpanded(QTreeWidgetItem *item)
 
 void CustomVarCtl::onAutoWidgetItemDoubleClicked(QTreeWidgetItem *item, int column)
 {
-    QTreeWidget *varWidget = m_autoWidget;
+    QTreeWidget *varWidget = m_customWidget;
 
     if(column == COLUMN_VALUE)
         varWidget->editItem(item,column);
     else
     {
-        AutoSignalBlocker autoBlocker(m_autoWidget);
+        AutoSignalBlocker autoBlocker(m_customWidget);
 
         QString varName = item->text(COLUMN_NAME);
         QString watchId = getWatchId(item);
         QString varPath = getTreeWidgetItemPath(item);
              
-        if(m_autoVarDispInfo.contains(varPath))
+        if(m_customVarDispInfo.contains(varPath))
         {
-            VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
+            VarCtl::DispInfo &dispInfo = m_customVarDispInfo[varPath];
             {
                 
                 if(dispInfo.dispFormat == VarCtl::DISP_DEC)
@@ -252,7 +202,7 @@ QString CustomVarCtl::getWatchId(QTreeWidgetItem* item)
 QTreeWidgetItem* CustomVarCtl::priv_findItemByWatchId(QString watchId)
 {
     QTreeWidgetItem *item = NULL;
-    QTreeWidget *varWidget = m_autoWidget;
+    QTreeWidget *varWidget = m_customWidget;
 
 
     //
@@ -298,141 +248,122 @@ QTreeWidgetItem* CustomVarCtl::priv_findItemByWatchId(QString watchId)
 
 
 
-void CustomVarCtl::ICore_onWatchVarChildAdded(VarWatch &watch)
+void CustomVarCtl::ICore_onCustomVarChildAdded(CoreMemRegion &region)
 {
     Core &core = Core::getInstance();
-    QTreeWidget *varWidget = m_autoWidget;
-    QString watchId = watch.getWatchId();
-    QString name = watch.getName();
-    QString varType = watch.getVarType();
-    bool hasChildren  = watch.hasChildren();
-    bool inScope = watch.inScope();
-    
-    debugMsg("%s(name:'%s')",__func__, stringToCStr(name));
-
-
-    AutoSignalBlocker autoBlocker(m_autoWidget);
+    QTreeWidget *memRegWidget = m_customWidget;
+    AutoSignalBlocker autoBlocker(m_customWidget);
 
     //
-    QTreeWidgetItem * rootItem = varWidget->invisibleRootItem();
-    QStringList watchIdParts = watchId.split('.');
-    QString thisWatchId;
+    QTreeWidgetItem * rootItem = memRegWidget->invisibleRootItem();
+    
+    
+    // quint64 getPointerAddress() { return m_address; };
+    // QString getBackupFile() const { return m_backupfile; };
+    // quint64 getSize() { return m_size; };
 
 
-    for(int partIdx = 0; partIdx < watchIdParts.size();partIdx++)
-    {
-        // Get the watchid to look for
-        if(thisWatchId != "")
-            thisWatchId += ".";
-        thisWatchId += watchIdParts[partIdx];
+    //     // Look for the item with the specified watchId
+    //     QTreeWidgetItem* foundItem = NULL;
+    //     for(int i = 0;foundItem == NULL && i < rootItem->childCount();i++)
+    //     {
+    //         QTreeWidgetItem* item =  rootItem->child(i);
+    //         QString itemKey = getWatchId(item);
 
-        // Look for the item with the specified watchId
-        QTreeWidgetItem* foundItem = NULL;
-        for(int i = 0;foundItem == NULL && i < rootItem->childCount();i++)
-        {
-            QTreeWidgetItem* item =  rootItem->child(i);
-            QString itemKey = getWatchId(item);
+    //         if(thisWatchId == itemKey)
+    //         {
+    //             foundItem = item;
+    //         }
+    //     }
 
-            if(thisWatchId == itemKey)
-            {
-                foundItem = item;
-            }
-        }
-
-        // This watch belonged to the WatchWidget?
-        if(partIdx == 0 && foundItem == NULL)
-        {
-            return;
-        }
+    //     // This watch belonged to the WatchWidget?
+    //     if(partIdx == 0 && foundItem == NULL)
+    //     {
+    //         return;
+    //     }
         
-        // Did not find one?
-        QTreeWidgetItem *item;
-        if(foundItem == NULL)
-        {
-            debugMsg("Adding '%s'", stringToCStr(name));
+    //     // Did not find one?
+    //     QTreeWidgetItem *item;
+    //     if(foundItem == NULL)
+    //     {
+    //         debugMsg("Adding '%s'", stringToCStr(name));
 
-            // Create the item
-            QStringList nameList;
-            nameList += name;
-            nameList += "";
-            nameList += varType;
-            item = new QTreeWidgetItem(nameList);
-            item->setData(DATA_COLUMN, Qt::UserRole, thisWatchId);
-            item->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            rootItem->addChild(item);
-            rootItem = item;
+    //         // Create the item
+    //         QStringList nameList;
+    //         nameList += name;
+    //         nameList += "";
+    //         nameList += varType;
+    //         item = new QTreeWidgetItem(nameList);
+    //         item->setData(DATA_COLUMN, Qt::UserRole, thisWatchId);
+    //         item->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    //         rootItem->addChild(item);
+    //         rootItem = item;
 
-
-            if(hasChildren)
-                rootItem->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+    //         rootItem->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicatorWhenChildless);
 
             
         
-        }
-        else
-        {
-            item = foundItem;
-            rootItem = foundItem;
-        }
+    //     }
+    //     else
+    //     {
+    //         item = foundItem;
+    //         rootItem = foundItem;
+    //     }
 
-        // The last part of the id?
-        if(partIdx+1 == watchIdParts.size())
-        {
-            // Update the text
-            QString varPath = getTreeWidgetItemPath(item);
-            VarCtl::DispInfo dispInfo;
-            if(m_autoVarDispInfo.contains(varPath) == false)
-            {
-                dispInfo.dispFormat = DISP_NATIVE;
-                dispInfo.isExpanded = false;
+    //     // The last part of the id?
+    //     if(partIdx+1 == watchIdParts.size())
+    //     {
+    //         // Update the text
+    //         QString varPath = getTreeWidgetItemPath(item);
+    //         VarCtl::DispInfo dispInfo;
+    //         if(m_customVarDispInfo.contains(varPath) == false)
+    //         {
+    //             dispInfo.dispFormat = DISP_NATIVE;
+    //             dispInfo.isExpanded = false;
 
-                debugMsg("Adding '%s'", stringToCStr(varPath));
+    //             debugMsg("Adding '%s'", stringToCStr(varPath));
 
 
-                m_autoVarDispInfo[varPath] = dispInfo;
-            }
-            else
-            {
-                dispInfo = m_autoVarDispInfo[varPath];
-            }
-            QString valueString = getDisplayString(watchId, varPath);
+    //             m_customVarDispInfo[varPath] = dispInfo;
+    //         }
+    //         else
+    //         {
+    //             dispInfo = m_customVarDispInfo[varPath];
+    //         }
+    //         QString valueString = getDisplayString(watchId, varPath);
   
-            bool enable = inScope;
+    //         bool enable = inScope;
 
-            if(!enable)
-                item->setDisabled(true);
-            else
-                item->setDisabled(false);
+    //         if(!enable)
+    //             item->setDisabled(true);
+    //         else
+    //             item->setDisabled(false);
             
 
-            item->setText(COLUMN_VALUE, valueString);
+    //         item->setText(COLUMN_VALUE, valueString);
 
-            // Color the text based on if the value is different
-            VarCtl::DispInfo &newDispInfo = m_autoVarDispInfo[varPath];
-            QBrush b;
-            if(newDispInfo.lastData != valueString)
-                b = QBrush(Qt::red);
-            else
-                b = m_textColor;
-            item->setForeground(COLUMN_VALUE,b);
-            newDispInfo.lastData = valueString;
+    //         // Color the text based on if the value is different
+    //         VarCtl::DispInfo &newDispInfo = m_customVarDispInfo[varPath];
+    //         QBrush b;
+    //         if(newDispInfo.lastData != valueString)
+    //             b = QBrush(Qt::red);
+    //         else
+    //             b = m_textColor;
+    //         item->setForeground(COLUMN_VALUE,b);
+    //         newDispInfo.lastData = valueString;
 
 
-            if(dispInfo.isExpanded && hasChildren)
-            {
+    //         if(dispInfo.isExpanded)
+    //         {
+    //             // TODO expandir info region de memoria
                 
-
-
-                // Get the children
-                core.gdbExpandVarWatchChildren(watchId);
-                varWidget->expandItem(item);
-            }
-        }
-    }
+    //             memRegWidget->expandItem(item);
+    //         }
+    //     }
+    // }
 
     
 }
-
 
 
 void CustomVarCtl::ICore_onLocalVarChanged(QStringList varNames)
@@ -464,12 +395,12 @@ QString CustomVarCtl::getDisplayString(QString watchId, QString varPath)
     //debugMsg("%s(watchId:'%s' varPath:'%s')", __func__, qPrintable(watchId), qPrintable(varPath));
 
     // Create value if not exist
-    if(!m_autoVarDispInfo.contains(varPath))
+    if(!m_customVarDispInfo.contains(varPath))
     {
         VarCtl::DispInfo dispInfo;
         dispInfo.dispFormat = DISP_NATIVE;
         dispInfo.isExpanded = false;
-        m_autoVarDispInfo[varPath] = dispInfo;
+        m_customVarDispInfo[varPath] = dispInfo;
     }
 
     VarWatch *watch = NULL;
@@ -477,7 +408,7 @@ QString CustomVarCtl::getDisplayString(QString watchId, QString varPath)
         watch = core.getVarWatchInfo(watchId);
     if(watch)
     {
-        VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
+        VarCtl::DispInfo &dispInfo = m_customVarDispInfo[varPath];
 
         switch(dispInfo.dispFormat)
         {
@@ -500,8 +431,8 @@ QString CustomVarCtl::getDisplayString(QString watchId, QString varPath)
 
 void CustomVarCtl::clear()
 {
-    QTreeWidget *autoWidget = m_autoWidget;
-    QTreeWidgetItem *rootItem = m_autoWidget->invisibleRootItem();
+    QTreeWidget *autoWidget = m_customWidget;
+    QTreeWidgetItem *rootItem = m_customWidget->invisibleRootItem();
 
     debugMsg("%s()", __func__);
 
@@ -541,44 +472,18 @@ void CustomVarCtl::setConfig(Settings *cfg)
     m_cfg = *cfg;
 }
 
-
-
-void CustomVarCtl::onDisplayAsDec()
+void CustomVarCtl::onAutoWidgetCurrentItemChanged( QTreeWidgetItem * current, int column )
 {
-    selectedChangeDisplayFormat(VarCtl::DISP_DEC);
-}
-
-void CustomVarCtl::onDisplayAsHex()
-{
-    selectedChangeDisplayFormat(VarCtl::DISP_HEX);
-}
-
-void CustomVarCtl::onDisplayAsBin()
-{
-    selectedChangeDisplayFormat(VarCtl::DISP_BIN);
-}
-
-void CustomVarCtl::onDisplayAsChar()
-{
-    selectedChangeDisplayFormat(VarCtl::DISP_CHAR);
-}
-
-
-
-
-
-
-void 
-CustomVarCtl::onAutoWidgetCurrentItemChanged( QTreeWidgetItem * current, int column )
-{
-    //QTreeWidget *varWidget = m_autoWidget;
+    //QTreeWidget *varWidget = m_customWidget;
     Core &core = Core::getInstance();
     QString oldKey = getWatchId(current);
+
+    std::cout << "OLD KEY: " << stringToCStr(oldKey) << std::endl;
     
     if(column != COLUMN_VALUE)
         return;
         
-    AutoSignalBlocker autoBlocker(m_autoWidget);
+    AutoSignalBlocker autoBlocker(m_customWidget);
 
     //debugMsg("%s(key:'%s')", __func__, qPrintable(oldKey));
     
@@ -612,10 +517,10 @@ CustomVarCtl::onAutoWidgetCurrentItemChanged( QTreeWidgetItem * current, int col
  */
 void CustomVarCtl::selectedChangeDisplayFormat(VarCtl::DispFormat fmt)
 {
-    AutoSignalBlocker autoBlocker(m_autoWidget);
+    AutoSignalBlocker autoBlocker(m_customWidget);
 
     // Loop through the selected items.
-    QList<QTreeWidgetItem *> items = m_autoWidget->selectedItems();
+    QList<QTreeWidgetItem *> items = m_customWidget->selectedItems();
     for(int i =0;i < items.size();i++)
     {
         QTreeWidgetItem *item = items[i];
@@ -625,9 +530,9 @@ void CustomVarCtl::selectedChangeDisplayFormat(VarCtl::DispFormat fmt)
         QString watchId = getWatchId(item);
         
         
-        if(m_autoVarDispInfo.contains(varPath))
+        if(m_customVarDispInfo.contains(varPath))
         {
-            VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
+            VarCtl::DispInfo &dispInfo = m_customVarDispInfo[varPath];
             {
                 dispInfo.dispFormat = fmt;
            
@@ -669,7 +574,7 @@ void CustomVarCtl::addNewWatch(QString varName)
 
         bool hasChildren = watch->hasChildren();
 
-        QTreeWidget *varWidget = m_autoWidget;
+        QTreeWidget *varWidget = m_customWidget;
 
 // Create a new dummy item
         QTreeWidgetItem *item;
@@ -689,16 +594,16 @@ void CustomVarCtl::addNewWatch(QString varName)
 
         QString varPath = getTreeWidgetItemPath(current);
         QString value  = getDisplayString(watchId, varPath);
-        if(!m_autoVarDispInfo.contains(varPath))
+        if(!m_customVarDispInfo.contains(varPath))
         {
             VarCtl::DispInfo newDispInfo;
             newDispInfo.dispFormat = DISP_NATIVE;
 
             debugMsg("Adding '%s'", stringToCStr(varPath));
-            m_autoVarDispInfo[varPath] = newDispInfo;
+            m_customVarDispInfo[varPath] = newDispInfo;
         }
 
-        VarCtl::DispInfo &dispInfo = m_autoVarDispInfo[varPath];
+        VarCtl::DispInfo &dispInfo = m_customVarDispInfo[varPath];
             
     
         current->setData(DATA_COLUMN, Qt::UserRole, watchId);
@@ -717,67 +622,12 @@ void CustomVarCtl::addNewWatch(QString varName)
         
 
         //
-        if(m_autoVarDispInfo.contains(varPath))
+        if(m_customVarDispInfo.contains(varPath))
         {
-            if(m_autoVarDispInfo[varPath].isExpanded)
+            if(m_customVarDispInfo[varPath].isExpanded)
             {
-                m_autoWidget->expandItem(current);
+                m_customWidget->expandItem(current);
             }
         }
     }
 }
-
-
-
-void CustomVarCtl::onKeyPress(QKeyEvent *keyEvent)
-{
-    if(keyEvent->key() == Qt::Key_Return)
-    {
-        // Get the active unit
-        QTreeWidgetItem * item = m_autoWidget->currentItem();
-        if(item)
-        {
-            m_autoWidget->editItem(item,COLUMN_VALUE);
-        }   
-    }
-
-}
-    
-
-/**
-* @brief Called when a watch is removed due to not being valid anymore.
-*/
-void CustomVarCtl::ICore_onWatchVarDeleted(VarWatch &watch)
-{
-    AutoSignalBlocker autoBlocker(m_autoWidget);
-
-    //debugMsg("%s('%s')", __func__, stringToCStr(watch.getWatchId()));
-
-    QTreeWidgetItem* item = priv_findItemByWatchId(watch.getWatchId());
-
-    if(!item)
-    {
-        //debugMsg("watch %s is not ours!", stringToCStr(watch.getWatchId()));
-        return;
-    }
-    // Get the root item for the item
-    while(item->parent() != NULL)
-    {
-        item = item->parent();
-    }
-
-
-    // Delete the item
-    QString watchId = item->data(DATA_COLUMN, Qt::UserRole).toString();
-    if(watchId != "")
-    {
-        QTreeWidgetItem *rootItem = m_autoWidget->invisibleRootItem();
-        rootItem->removeChild(item);
-    }
-
-
-
-
-}
-
-
