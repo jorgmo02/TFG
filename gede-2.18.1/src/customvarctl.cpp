@@ -129,7 +129,7 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
 
     // Create the item
     QStringList elementsList;
-    elementsList += QString::number(region.getPointerAddress());
+    elementsList += QStringLiteral("0x%1").arg(region.getPointerAddress(), 6, 16, QLatin1Char('0'));
     elementsList += region.getBackupFile();
     elementsList += QString::number(region.getSize());
     QTreeWidgetItem *item = new QTreeWidgetItem(elementsList);
@@ -138,7 +138,7 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
     item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicatorWhenChildless);
     item->setDisabled(false);
     
-    rootItem->addChild(item);    
+    rootItem->addChild(item);
 
     // if(dispInfo.isExpanded)
     // {

@@ -679,7 +679,7 @@ QStringList Core::gdbGetMemoryMap()
 
     resultData.dump();
 
-    QStringList list = {"0x0 ASEREJE 2", "0x1 LELE 3"};
+    QStringList list = {"0x0 ASEREJE 2", "0x10 LELE 3"};
 
     // TODO hay que coger aquí lo que me interesa del resultado de command Y GUARDARLO EN UN SITIO AUXILIAR
     // QString dataStr = resultData.getString("/memory/1/contents");
