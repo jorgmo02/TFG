@@ -795,15 +795,11 @@ Resp *GdbCom::parseOutput()
     if(isTokenPending())
     {
         resp = parseOutOfBandRecord();
-        if(resp)
-            std::cout << "Resp1: " << stringToCStr(resp->getString()) << std::endl; 
     }
 
     if(isTokenPending() && resp == NULL)
     {
         resp = parseResultRecord();
-        if(resp)
-            std::cout << "Resp2: " << stringToCStr(resp->getString()) << std::endl; 
     }
 
     if(isTokenPending() && resp == NULL)
@@ -971,7 +967,6 @@ int GdbCom::readFromGdb(GdbResult *m_result, Tree *m_resultData)
             // Parse any data received from GDB
             do
             {
-                // TODO esto se come el output, hay que evitarlo
                 resp = parseOutput();
                 if(resp == NULL)
                 {
@@ -1028,8 +1023,193 @@ int GdbCom::readFromGdb(GdbResult *m_result, Tree *m_resultData)
     return rc;
 }
 
+int GdbCom::readLinesFromGdb(GdbResult *m_result, std::vector<Tree> *m_resultData)
+{
+    int rc = 0;
+    //debugMsg("## '%s'",stringToCStr(row));
+
+    Resp *resp = NULL;
+
+    
+    if(m_result == NULL)
+    {
+        
+        // Parse any data received from GDB
+        resp = parseOutput();
+
+        // resp es null cuando es la última línea de la salida de un comando
+        if(resp == NULL)
+        {
+            if(!m_process.waitForReadyRead(100))
+            {
+                QProcess::ProcessState  state = m_process.state();
+                if(state == QProcess::NotRunning)
+                {
+                    rc = -1;
+                }
+            }
+        }
+        
+        while(!m_freeTokens.isEmpty())
+        {
+            Token *token = m_freeTokens.takeFirst();
+            delete token;
+        }
+
+        if(resp)
+        {
+            m_respQueue.push_back(resp);
+
+            if(resp->getType() == Resp::RESULT)
+            {
+                assert(m_resultData != NULL);
+            
+                m_resultData->push_back(resp->tree);
+            }
+        }
+
+    }
+    else
+    {
+        *m_result = GDB_DONE;
+    
+        do
+        {
+            
+            // Parse any data received from GDB
+            do
+            {
+                resp = parseOutput();
+                if(resp == NULL)
+                {
+                    if(!m_process.waitForReadyRead(100))
+                    {
+                        QProcess::ProcessState  state = m_process.state();
+                        if(state == QProcess::NotRunning)
+                        {
+                            assert(0);
+                            
+                            rc = -1;
+                        }
+                    }
+                }
+            }while(resp == NULL && rc == 0);
+        
+            
+            while(!m_freeTokens.isEmpty())
+            {
+                Token *token = m_freeTokens.takeFirst();
+                delete token;
+            }
+
+
+            if(resp != NULL)
+                m_respQueue.push_back(resp);
+
+            if(resp != NULL && resp->getType() == Resp::RESULT)
+            {
+                assert(m_resultData != NULL);
+                
+                if(m_result)
+                    *m_result = resp->m_result;
+
+                // TODO falta constructor de move (https://stackoverflow.com/questions/19826376/insert-into-vector-having-objects-without-copy-constructor)
+                // y lo mismo arriba    
+                m_resultData->push_back(resp->tree);
+            }
+
+        } while(m_result != NULL && resp != NULL && resp->getType() != Resp::TERMINATION);
+
+        if(resp == NULL && m_result != NULL)
+            *m_result = GDB_ERROR;
+    }
+
+    //  debugMsg("# ---<< \n");
+
+
+//for(int i = 0;i < m_respQueue.size();i++)
+{
+//    debugMsg("%d > %s", i, stringToCStr(m_respQueue[i].getString()));
+}
+
+ 
+
+    return rc;
+}
+
 
 GdbResult GdbCom::command(Tree *resultData, QString text)
+{
+    Tree resultDataNull;
+    int rc = 0;
+
+    assert(m_busy == 0);
+    
+    m_busy++;
+    
+    if(resultData == NULL)
+        resultData = &resultDataNull;
+    
+    debugMsg("# Cmd: '%s'", stringToCStr(text));
+
+    GdbResult result;
+    
+    assert(resultData != NULL);
+
+    resultData->removeAll();
+
+    
+    //
+    PendingCommand cmd;
+    cmd.m_cmdText = text;
+    m_pending.push_back(cmd);
+
+    // Send the command to gdb
+    text += "\n";
+    QByteArray wtext = text.toLatin1();
+    m_process.write(wtext);
+
+
+    if(m_enableLog)
+    {
+        //
+        QString logText;
+        writeLogEntry("\n");
+        logText = "<< ";
+        logText += text;
+        writeLogEntry(logText);
+    }
+    
+
+    do
+    {
+        if(readFromGdb(&result,resultData))
+        {
+                rc = -1;
+        }
+    }while(!m_pending.isEmpty() && rc == 0);
+
+    
+    while(!m_list.isEmpty())
+    {
+        readFromGdb(NULL,resultData);
+    }
+     
+
+    m_busy--;
+
+    
+    dispatchResp();
+
+    onReadyReadStandardOutput();
+
+    if(rc)
+        return GDB_ERROR;
+    return result;
+}
+
+
+GdbResult GdbCom::commandGetOutputLines(Tree *resultData, QString text)
 {
     Tree resultDataNull;
     int rc = 0;
