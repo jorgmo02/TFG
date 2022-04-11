@@ -1023,7 +1023,7 @@ int GdbCom::readFromGdb(GdbResult *m_result, Tree *m_resultData)
     return rc;
 }
 
-int GdbCom::readLinesFromGdb(GdbResult *m_result, std::vector<Tree> *m_resultData)
+int GdbCom::readLinesFromGdb(GdbResult *m_result, QStringList *m_resultData)
 {
     int rc = 0;
     //debugMsg("## '%s'",stringToCStr(row));
@@ -1064,7 +1064,7 @@ int GdbCom::readLinesFromGdb(GdbResult *m_result, std::vector<Tree> *m_resultDat
             {
                 assert(m_resultData != NULL);
             
-                m_resultData->push_back(resp->tree);
+                m_resultData->push_back(resp->getString());
             }
         }
 
@@ -1113,9 +1113,7 @@ int GdbCom::readLinesFromGdb(GdbResult *m_result, std::vector<Tree> *m_resultDat
                 if(m_result)
                     *m_result = resp->m_result;
 
-                // TODO falta constructor de move (https://stackoverflow.com/questions/19826376/insert-into-vector-having-objects-without-copy-constructor)
-                // y lo mismo arriba    
-                m_resultData->push_back(resp->tree);
+                m_resultData->push_back(resp->getString());
             }
 
         } while(m_result != NULL && resp != NULL && resp->getType() != Resp::TERMINATION);
@@ -1209,9 +1207,9 @@ GdbResult GdbCom::command(Tree *resultData, QString text)
 }
 
 
-GdbResult GdbCom::commandGetOutputLines(Tree *resultData, QString text)
+GdbResult GdbCom::commandGetOutputLines(QStringList *resultData, QString text)
 {
-    Tree resultDataNull;
+    QStringList resultDataNull;
     int rc = 0;
 
     assert(m_busy == 0);
@@ -1227,9 +1225,8 @@ GdbResult GdbCom::commandGetOutputLines(Tree *resultData, QString text)
     
     assert(resultData != NULL);
 
-    resultData->removeAll();
+    resultData->clear();
 
-    
     //
     PendingCommand cmd;
     cmd.m_cmdText = text;
@@ -1254,7 +1251,7 @@ GdbResult GdbCom::commandGetOutputLines(Tree *resultData, QString text)
 
     do
     {
-        if(readFromGdb(&result,resultData))
+        if(readLinesFromGdb(&result, resultData))
         {
                 rc = -1;
         }
@@ -1263,7 +1260,7 @@ GdbResult GdbCom::commandGetOutputLines(Tree *resultData, QString text)
     
     while(!m_list.isEmpty())
     {
-        readFromGdb(NULL,resultData);
+        readLinesFromGdb(NULL, resultData);
     }
      
 

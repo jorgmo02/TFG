@@ -79,9 +79,9 @@ CoreMemRegion::~CoreMemRegion() {
 void CoreMemRegion::loadFromGdbString(QString data)
 {
     // TODO
-    QStringList dataSplit = data.split(" ");
+    QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
     m_address = dataSplit[0].toUInt(NULL, 16);
-    m_backupfile = dataSplit[1];
+    m_backupfile = dataSplit[4];
     m_size = dataSplit[2].toUInt(NULL, 16);
 }
 
@@ -661,13 +661,13 @@ int Core::gdbGetMemory(quint64 addr, size_t count, QByteArray *data)
 QStringList Core::gdbGetMemoryMap()
 {
     GdbCom& com = GdbCom::getInstance();
-    Tree resultData;
 
     int rc = 0;
     QString cmdStr;
     cmdStr.sprintf("-interpreter-exec console \"info proc mappings %u\"" , (unsigned int)m_pid);
     
-    rc = com.command(&resultData, cmdStr);
+    QStringList resultData;
+    rc = com.commandGetOutputLines(&resultData, cmdStr);
 
     QStringList list = {"0x0 ASEREJE 2", "0x10 LELE 3"};
 
@@ -688,7 +688,7 @@ QStringList Core::gdbGetMemoryMap()
     //     }
     // }
 
-    return list;
+    return resultData;
 }
 
 

@@ -564,19 +564,23 @@ void MainWindow::ICore_onStopped(ICore::StopReason reason, QString path, int lin
     fillInStack();
 }
 
+#define MEM_COL_NAME 0
+#define START_REGIONS 4
+
 void MainWindow::ICore_onCoreMemChanged()
 {
     m_customVarCtl.clear();
 
     Core &core = Core::getInstance();
     QStringList regions = core.gdbGetMemoryMap();
-    for(int i = 0; i < regions.size(); i++)
+
+    // TODO hay que controlar los indices estos
+    for(int i = START_REGIONS; i < regions.size(); i++)
     {
         CoreMemRegion reg(regions[i]);
         m_customVarCtl.ICore_onCoreMemChanged(reg);
     }
 }
-
 
 /**
  * @brief Finds a child to a treewidget node.
