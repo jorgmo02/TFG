@@ -671,7 +671,7 @@ QStringList Core::gdbGetMemoryMap()
 
     QStringList list = {"0x0 ASEREJE 2", "0x10 LELE 3"};
 
-    // TODO hay que hacer aquí cosas con el resultado de command
+    // TODO creo que hay que hacer aquí cosas con el resultado de command
     // QString dataStr = resultData.getString("/memory/1/contents");
     // if(!dataStr.isEmpty())
     // {
