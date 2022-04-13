@@ -1106,7 +1106,7 @@ int GdbCom::readLinesFromGdb(GdbResult *m_result, QStringList *m_resultData)
             if(resp != NULL)
                 m_respQueue.push_back(resp);
 
-            if(resp != NULL && resp->getType() == Resp::RESULT)
+            if(resp != NULL && resp->getString().size() > 0)
             {
                 assert(m_resultData != NULL);
                 
