@@ -60,16 +60,13 @@ void VarWatch::setValue(QString value)
     m_var.valueFromGdbString(value);
 }
 
-CoreMemRegion::CoreMemRegion() :
-    m_address(0),
-    m_backupfile(""),
-    m_size(0) 
-{
-}
+int CoreMemRegion::RegionID = 0;
 
 CoreMemRegion::CoreMemRegion(QString str)
 {
     loadFromGdbString(str);
+    id = RegionID;
+    RegionID++;
 }
 
 CoreMemRegion::~CoreMemRegion() {
@@ -78,7 +75,7 @@ CoreMemRegion::~CoreMemRegion() {
 
 void CoreMemRegion::loadFromGdbString(QString data)
 {
-    // TODO
+    // TODO cuidado con los indices
     QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
     bool ok;
     m_address = dataSplit[0].toLong(&ok, 16);
@@ -668,26 +665,7 @@ QStringList Core::gdbGetMemoryMap()
     cmdStr.sprintf("-interpreter-exec console \"info proc mappings %u\"" , (unsigned int)m_pid);
     
     QStringList resultData;
-    rc = com.commandGetOutputLines(&resultData, cmdStr);
-
-    QStringList list = {"0x0 ASEREJE 2", "0x10 LELE 3"};
-
-    // TODO creo que hay que hacer aquí cosas con el resultado de command
-    // QString dataStr = resultData.getString("/memory/1/contents");
-    // if(!dataStr.isEmpty())
-    // {
-    //     data->clear();
-
-    //     QByteArray dataByteArray = dataStr.toLocal8Bit();
-    //     const char *dataCStr = dataByteArray.constData();
-    //     int dataCStrLen = strlen(dataCStr);
-    //     for(int i = 0;i+1 < dataCStrLen;i+=2)
-    //     {
-    //         unsigned char dataByte = hexStringToU8(dataCStr+i);
-            
-    //         data->push_back(dataByte);
-    //     }
-    // }
+    com.commandGetOutputLines(&resultData, cmdStr);
 
     return resultData;
 }

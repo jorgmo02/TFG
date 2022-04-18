@@ -152,11 +152,15 @@ class VarWatch
  */
 class CoreMemRegion
 {
+private:
+    static int RegionID;
+
 public:
-    CoreMemRegion();
+    CoreMemRegion() = delete;
     CoreMemRegion(QString str);
     virtual ~CoreMemRegion();
 
+    int getID() { return id; }
     quint64 getPointerAddress() { return m_address; };
     QString getBackupFile() const { return m_backupfile; };
     quint64 getSize() { return m_size; };
@@ -181,10 +185,10 @@ private:
     void clear();
 
 private:
-
-    quint64 m_address; //!< The address of data the variable points to.
-    QString m_backupfile;
-    quint64 m_size;
+    int id = -1;
+    quint64 m_address = 0; //!< The address of data the variable points to.
+    QString m_backupfile = "";
+    quint64 m_size = 0;
 };
 
 

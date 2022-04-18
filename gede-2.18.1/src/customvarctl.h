@@ -47,6 +47,8 @@ private:
 
     QString getTreeWidgetItemPath(QTreeWidgetItem *item);
 
+    QTreeWidgetItem* createItem(QStringList* values);
+
 private:
     QTreeWidget *m_customWidget;
     

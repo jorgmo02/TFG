@@ -67,11 +67,14 @@ void CustomVarCtl::setWidget(QTreeWidget *autoWidget)
     m_customWidget->setColumnCount(3);
     m_customWidget->setColumnWidth(MEMORY_POS, 120);
     m_customWidget->setColumnWidth(BACKUP_FILE, 140);
+
+    // TODO ver si esta es la disposicion q me interesa
     QStringList names;
     names += "Memory start";
     names += "Objfile";
     names += "Size";
     m_customWidget->setHeaderLabels(names);
+
     connect(m_customWidget, SIGNAL(itemDoubleClicked ( QTreeWidgetItem * , int  )), this,
                             SLOT(onAutoWidgetItemDoubleClicked(QTreeWidgetItem *, int )));
     connect(m_customWidget, SIGNAL(itemExpanded ( QTreeWidgetItem * )), this,
@@ -121,23 +124,29 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
     QTreeWidget* memRegWidget = m_customWidget;
     AutoSignalBlocker autoBlocker(m_customWidget);
 
-    //
-    QTreeWidgetItem* rootItem = memRegWidget->invisibleRootItem();
-
     debugMsg("Adding '%s'", stringToCStr(name));
 
+    // TODO ver si esta es la disposicion q me interesa
     // Create the item
     QStringList elementsList;
     elementsList += QStringLiteral("0x%1").arg(region.getPointerAddress(), 6, 16, QLatin1Char('0'));
     elementsList += region.getBackupFile();
     elementsList += QString::number(region.getSize());
-    QTreeWidgetItem *item = new QTreeWidgetItem(elementsList);
-    // item->setData(DATA_COLUMN, Qt::UserRole, region.getPointerAddress());
-    item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-    item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicatorWhenChildless);
-    item->setDisabled(false);
+    QTreeWidgetItem *parent = createItem(&elementsList);
     
-    rootItem->addChild(item);
+    // TODO anhadir hijos del item
+    // Create children items
+    QStringList childrenElementsList;
+    childrenElementsList += "CHILD1";
+    childrenElementsList += "CHILDValue";
+    QTreeWidgetItem *child1 = createItem(&childrenElementsList);
+
+    parent->addChild(child1);
+
+
+    //
+    QTreeWidgetItem* rootItem = memRegWidget->invisibleRootItem();
+    rootItem->addChild(parent);
 
     // if(dispInfo.isExpanded)
     // {
@@ -145,6 +154,15 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
         
     //     memRegWidget->expandItem(item);
     // }
+}
+
+QTreeWidgetItem* CustomVarCtl::createItem(QStringList* elementsList)
+{
+    QTreeWidgetItem *item = new QTreeWidgetItem(*elementsList);
+    item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicatorWhenChildless);
+    item->setDisabled(false);
+    return item;
 }
 
 void CustomVarCtl::clear()

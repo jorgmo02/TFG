@@ -569,12 +569,13 @@ void MainWindow::ICore_onStopped(ICore::StopReason reason, QString path, int lin
 
 void MainWindow::ICore_onCoreMemChanged()
 {
-    m_customVarCtl.clear();
 
     Core &core = Core::getInstance();
     QStringList regions = core.gdbGetMemoryMap();
 
-    // TODO hay que controlar los indices estos
+    // TODO no borrar cuando el memoryMap es igual
+    m_customVarCtl.clear();
+    // TODO hay que revisar los indices estos
     for(int i = START_REGIONS; i < regions.size(); i++)
     {
         CoreMemRegion reg(regions[i]);
