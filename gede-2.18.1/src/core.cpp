@@ -80,9 +80,10 @@ void CoreMemRegion::loadFromGdbString(QString data)
 {
     // TODO
     QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
-    m_address = dataSplit[0].toUInt(NULL, 16);
+    bool ok;
+    m_address = dataSplit[0].toLong(&ok, 16);
     m_backupfile = dataSplit[4];
-    m_size = dataSplit[2].toUInt(NULL, 16);
+    m_size = dataSplit[2].toLong(&ok, 16);
 }
 
 void CoreMemRegion::clear()
