@@ -60,6 +60,7 @@ void VarWatch::setValue(QString value)
     m_var.valueFromGdbString(value);
 }
 
+long CoreMemRegion::PageSize = sysconf(_SC_PAGESIZE);
 int CoreMemRegion::RegionID = 0;
 
 CoreMemRegion::CoreMemRegion(QString str)
@@ -81,6 +82,14 @@ void CoreMemRegion::loadFromGdbString(QString data)
     m_address = dataSplit[0].toLong(&ok, 16);
     m_backupfile = dataSplit[4];
     m_size = dataSplit[2].toLong(&ok, 16);
+}
+
+void CoreMemRegion::setPermissionsFromString(QString data)
+{
+    // TODO cuidado con los indices
+    QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
+    bool ok;
+    m_permissions = dataSplit[2];
 }
 
 void CoreMemRegion::clear()
@@ -656,6 +665,7 @@ int Core::gdbGetMemory(quint64 addr, size_t count, QByteArray *data)
     return rc;
 }
 
+#define START_INFOPROCMAPPINGS 4
 QStringList Core::gdbGetMemoryMap()
 {
     GdbCom& com = GdbCom::getInstance();
@@ -666,6 +676,30 @@ QStringList Core::gdbGetMemoryMap()
     
     QStringList resultData;
     com.commandGetOutputLines(&resultData, cmdStr);
+
+    for(int i = 0; i < START_INFOPROCMAPPINGS; i++){
+        resultData.takeFirst();
+    }
+
+    return resultData;
+}
+
+#define START_PMAP 2
+QStringList Core::gdbGetMemoryPermissions()
+{
+    GdbCom& com = GdbCom::getInstance();
+
+    int rc = 0;
+    QString cmdStr;
+    cmdStr.sprintf("pmap %u" , (unsigned int)m_pid);
+    
+    QStringList resultData;
+    com.readLinesFromShell(cmdStr, &resultData);
+
+    for(int i = 0; i < START_PMAP; i++){
+        resultData.takeFirst();
+    }
+    resultData.takeLast();
 
     return resultData;
 }

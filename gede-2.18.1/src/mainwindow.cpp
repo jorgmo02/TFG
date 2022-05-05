@@ -565,20 +565,21 @@ void MainWindow::ICore_onStopped(ICore::StopReason reason, QString path, int lin
 }
 
 #define MEM_COL_NAME 0
-#define START_REGIONS 4
 
 void MainWindow::ICore_onCoreMemChanged()
 {
 
     Core &core = Core::getInstance();
     QStringList regions = core.gdbGetMemoryMap();
+    QStringList permissions = core.gdbGetMemoryPermissions();
 
     // TODO no borrar cuando el memoryMap es igual
     m_customVarCtl.clear();
     // TODO hay que revisar los indices estos
-    for(int i = START_REGIONS; i < regions.size(); i++)
+    for(int i = 0; i < regions.size(); i++)
     {
         CoreMemRegion reg(regions[i]);
+        reg.setPermissionsFromString(permissions[i]);
         m_customVarCtl.ICore_onCoreMemChanged(reg);
     }
 }

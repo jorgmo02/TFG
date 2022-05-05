@@ -65,14 +65,14 @@ void CustomVarCtl::setWidget(QTreeWidget *autoWidget)
     
         //
     m_customWidget->setColumnCount(3);
-    m_customWidget->setColumnWidth(MEMORY_POS, 120);
-    m_customWidget->setColumnWidth(BACKUP_FILE, 140);
+    m_customWidget->setColumnWidth(MEMORY_POS, 160);
+    m_customWidget->setColumnWidth(BACKUP_FILE, 400);
 
     // TODO ver si esta es la disposicion q me interesa
     QStringList names;
     names += "Memory start";
     names += "Objfile";
-    names += "Size";
+    names += "Size (in pages)";
     m_customWidget->setHeaderLabels(names);
 
     connect(m_customWidget, SIGNAL(itemDoubleClicked ( QTreeWidgetItem * , int  )), this,
@@ -131,17 +131,27 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
     QStringList elementsList;
     elementsList += QStringLiteral("0x%1").arg(region.getPointerAddress(), 6, 16, QLatin1Char('0'));
     elementsList += region.getBackupFile();
-    elementsList += QString::number(region.getSize());
+    elementsList += QString::number(region.getSizeInPages());
     QTreeWidgetItem *parent = createItem(&elementsList);
     
     // TODO anhadir hijos del item
     // Create children items
-    QStringList childrenElementsList;
-    childrenElementsList += "CHILD1";
-    childrenElementsList += "CHILDValue";
-    QTreeWidgetItem *child1 = createItem(&childrenElementsList);
+
+    // size (bytes)
+    QStringList sizeInBytes;
+    sizeInBytes += "Size (in bytes)";
+    sizeInBytes += QString::number(region.getSize());
+    QTreeWidgetItem *child1 = createItem(&sizeInBytes);
 
     parent->addChild(child1);
+
+    // 
+    QStringList childrenElementsList;
+    childrenElementsList += "Permissions";
+    childrenElementsList += region.getPermissions();
+    QTreeWidgetItem *child2 = createItem(&childrenElementsList);
+
+    parent->addChild(child2);
 
 
     //

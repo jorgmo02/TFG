@@ -1026,8 +1026,7 @@ int GdbCom::readFromGdb(GdbResult *m_result, Tree *m_resultData)
 int GdbCom::readLinesFromGdb(GdbResult *m_result, QStringList *m_resultData)
 {
     int rc = 0;
-    //debugMsg("## '%s'",stringToCStr(row));
-
+    
     Resp *resp = NULL;
 
     
@@ -1133,6 +1132,32 @@ int GdbCom::readLinesFromGdb(GdbResult *m_result, QStringList *m_resultData)
  
 
     return rc;
+}
+
+
+int GdbCom::readLinesFromShell(QString cmd, QStringList *m_resultData)
+{
+    FILE *fp;
+    char path[1035];
+
+    QByteArray ba = cmd.toLocal8Bit();
+    const char *c_str = ba.data();
+
+    /* Open the command for reading. */
+    fp = popen(c_str, "r");
+    if (fp == NULL) {
+        return 1;
+    }
+
+    /* Read the output a line at a time - output it. */
+    while (fgets(path, sizeof(path), fp) != NULL) {
+        m_resultData->push_back(path);
+    }
+
+    /* close */
+    pclose(fp);
+
+    return 0;
 }
 
 

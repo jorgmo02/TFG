@@ -184,6 +184,7 @@ class GdbCom : public QObject
         GdbResult commandF(Tree *resultData, const char *cmd, ...);
         GdbResult command(Tree *resultData, QString cmd);
         GdbResult commandGetOutputLines(QStringList *resultData, QString cmd);
+        int readLinesFromShell(QString cmd, QStringList *m_resultData);
 
         static QList<Token*> tokenize(QString str);
 
