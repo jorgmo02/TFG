@@ -79,7 +79,7 @@ void CoreMemRegion::loadFromGdbString(QString data)
     // TODO cuidado con los indices
     QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
     bool ok;
-    m_address = dataSplit[0].toLong(&ok, 16);
+    m_address = dataSplit[0];//.toLong(&ok, 16);
     m_backupfile = dataSplit[4];
     m_size = dataSplit[2].toLong(&ok, 16);
 }

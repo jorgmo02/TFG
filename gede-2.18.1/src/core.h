@@ -162,8 +162,8 @@ public:
     virtual ~CoreMemRegion();
 
     int getID() { return id; }
-    quint64 getPointerAddress() { return m_address; };
-    QString getAddressHexString() { QStringLiteral("0x%1").arg(m_address, 6, 16, QLatin1Char('0'));};
+    QString getPointerAddress() { return m_address; };
+    //sQString getAddressHexString() { QStringLiteral("0x%1").arg(m_address, 6, 16, QLatin1Char('0'));};
     QString getBackupFile() const { return m_backupfile; };
     QString getPermissions() const { return m_permissions; };
     quint64 getSize() { return m_size; };
@@ -191,7 +191,7 @@ private:
 
 private:
     int id = -1;
-    quint64 m_address = 0; //!< The address of data the variable points to.
+    QString m_address = ""; //!< The address of data the variable points to.
     QString m_backupfile = "";
     quint64 m_size = 0;
     QString m_permissions = "-------";

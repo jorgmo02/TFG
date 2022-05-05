@@ -129,7 +129,7 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
     // TODO ver si esta es la disposicion q me interesa
     // Create the item
     QStringList elementsList;
-    elementsList += QStringLiteral("0x%1").arg(region.getPointerAddress(), 6, 16, QLatin1Char('0'));
+    elementsList += region.getPointerAddress(); //region.getAddressHexString();
     elementsList += region.getBackupFile();
     elementsList += QString::number(region.getSizeInPages());
     QTreeWidgetItem *parent = createItem(&elementsList);
