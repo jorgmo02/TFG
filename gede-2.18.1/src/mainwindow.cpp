@@ -568,18 +568,30 @@ void MainWindow::ICore_onStopped(ICore::StopReason reason, QString path, int lin
 
 void MainWindow::ICore_onCoreMemChanged()
 {
-
     Core &core = Core::getInstance();
     QStringList regions = core.gdbGetMemoryMap();
     QStringList permissions = core.gdbGetMemoryPermissions();
+    QStringList names = core.gdbGetMemoryNames();
 
-    // TODO no borrar cuando el memoryMap es igual
+    // std::vector<CoreMemRegion> regionsCompare;
+    // for(int i = 0; i < regions.size(); i++)
+    // {
+    //     CoreMemRegion reg(regions[i]);
+    //     reg.setPermissionsFromString(permissions[i]);
+    //     reg.setNameFromString(names[i]);
+    //     regionsCompare.push_back(reg);
+    // }
+
+    // // TODO no borrar cuando el memoryMap es igual
+    // std::vector<CoreMemRegion>* prevRegions = m_customVarCtl.getRegions();
+
     m_customVarCtl.clear();
     // TODO hay que revisar los indices estos
     for(int i = 0; i < regions.size(); i++)
     {
         CoreMemRegion reg(regions[i]);
         reg.setPermissionsFromString(permissions[i]);
+        reg.setNameFromString(names[i]);
         m_customVarCtl.ICore_onCoreMemChanged(reg);
     }
 }

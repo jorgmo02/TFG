@@ -92,6 +92,13 @@ void CoreMemRegion::setPermissionsFromString(QString data)
     m_permissions = dataSplit[2];
 }
 
+void CoreMemRegion::setNameFromString(QString data)
+{
+    // TODO cuidado con los indices
+    QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
+    m_name = dataSplit[4];
+}
+
 void CoreMemRegion::clear()
 {
 }
@@ -678,6 +685,25 @@ QStringList Core::gdbGetMemoryMap()
     com.commandGetOutputLines(&resultData, cmdStr);
 
     for(int i = 0; i < START_INFOPROCMAPPINGS; i++){
+        resultData.takeFirst();
+    }
+
+    return resultData;
+}
+
+#define START_INFOFILES 7
+QStringList Core::gdbGetMemoryNames()
+{
+    GdbCom& com = GdbCom::getInstance();
+
+    int rc = 0;
+    QString cmdStr;
+    cmdStr.sprintf("-interpreter-exec console \"info files %u\"" , (unsigned int)m_pid);
+    
+    QStringList resultData;
+    com.commandGetOutputLines(&resultData, cmdStr);
+
+    for(int i = 0; i < START_INFOFILES; i++){
         resultData.takeFirst();
     }
 

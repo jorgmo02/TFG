@@ -145,7 +145,7 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
 
     parent->addChild(child1);
 
-    // 
+    // permissions
     QStringList childrenElementsList;
     childrenElementsList += "Permissions";
     childrenElementsList += region.getPermissions();
@@ -153,11 +153,19 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
 
     parent->addChild(child2);
 
+    // name
+    QStringList regionName;
+    regionName += "Region name";
+    regionName += region.getName();
+    QTreeWidgetItem *child3 = createItem(&regionName);
+
+    parent->addChild(child3);
 
     //
     QTreeWidgetItem* rootItem = memRegWidget->invisibleRootItem();
     rootItem->addChild(parent);
 
+    regions.push_back(region);
     // if(dispInfo.isExpanded)
     // {
     //     // TODO expandir info region de memoria si fuera a añadir datos

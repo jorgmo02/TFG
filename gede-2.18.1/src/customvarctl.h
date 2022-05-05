@@ -35,6 +35,8 @@ public:
 
     void ICore_onStateChanged(ICore::TargetState state);
     void ICore_onCoreMemChanged(CoreMemRegion &region);
+
+    const std::vector<CoreMemRegion>* getRegions() { return &regions; };
     
     void clear();
 public slots:
@@ -51,7 +53,8 @@ private:
 
 private:
     QTreeWidget *m_customWidget;
-    
+    std::vector<CoreMemRegion> regions;
+
     VarCtl::DispInfoMap m_customVarDispInfo;
     Settings m_cfg;
     QColor m_textColor; //!< Color to use for text in the widget

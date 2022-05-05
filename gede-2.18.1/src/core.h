@@ -167,7 +167,8 @@ public:
     QString getBackupFile() const { return m_backupfile; };
     QString getPermissions() const { return m_permissions; };
     quint64 getSize() { return m_size; };
-    quint64 getSizeInPages() { return m_size / PageSize; }
+    quint64 getSizeInPages() { return m_size / PageSize; };
+    QString getName() const { return m_name; };
 
     void setPointerAddress(quint64 addr) { m_address = addr; };
     void setBackupFile(QString backupfile) { m_backupfile = backupfile; };
@@ -175,6 +176,7 @@ public:
     
     void loadFromGdbString(QString data);
     void setPermissionsFromString(QString data);
+    void setNameFromString(QString data);
 
     bool operator==(const CoreMemRegion& other) {
         return m_address == other.m_address &&
@@ -195,6 +197,7 @@ private:
     QString m_backupfile = "";
     quint64 m_size = 0;
     QString m_permissions = "-------";
+    QString m_name = "";
 };
 
 
@@ -324,6 +327,7 @@ public:
     int gdbGetMemory(quint64 addr, size_t count, QByteArray *data);
 
     QStringList gdbGetMemoryMap();
+    QStringList gdbGetMemoryNames();
     QStringList gdbGetMemoryPermissions();
     
     void selectThread(int threadId);
