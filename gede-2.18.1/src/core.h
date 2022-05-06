@@ -329,6 +329,8 @@ public:
     QStringList gdbGetMemoryMap();
     QStringList gdbGetMemoryNames();
     QStringList gdbGetMemoryPermissions();
+
+    int setPagination();
     
     void selectThread(int threadId);
     void selectFrame(int selectedFrameIdx);
@@ -357,7 +359,7 @@ public:
     bool isRunning();
     
 private slots:
-        void onGdbOutput(int socketNr);
+    void onGdbOutput(int socketNr);
 
 private:
     ICore *m_inf;
@@ -378,6 +380,8 @@ private:
 
     QStringList m_localVars;
     int m_memDepth; //!< The memory depth. (Either 64 or 32).
+
+    bool m_paginationEnabled = false;
 };
 
 

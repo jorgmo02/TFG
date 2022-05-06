@@ -408,6 +408,8 @@ int Core::initPid(Settings *cfg, QString gdbPath, QString programPath, int pid)
 
     gdbGetFiles();
 
+    setPagination();
+
     return rc;
 }
 
@@ -489,6 +491,8 @@ int Core::initLocal(Settings *cfg, QString gdbPath, QString programPath, QString
 
 
     gdbGetFiles();
+
+    setPagination();
 
     return rc;
 }
@@ -592,6 +596,7 @@ int Core::initRemote(Settings *cfg, QString gdbPath, QString programPath, QStrin
 
     gdbGetFiles();
 
+    setPagination();
     
     return 0;
 }
@@ -729,6 +734,26 @@ QStringList Core::gdbGetMemoryPermissions()
 
     return resultData;
 }
+
+int Core::setPagination()
+{
+    GdbCom& com = GdbCom::getInstance();
+    int rc = 0;
+ 
+    QString paginationcommand = "show pagination";
+    QStringList result;
+    com.commandGetOutputLines(&result, paginationcommand);
+    if (result.count() >= 2){
+        QStringList dataSplit = result[1].split(QLatin1Char(' '), QString::SkipEmptyParts);
+        char c = dataSplit[4].toStdString()[1];
+        m_paginationEnabled = c == 'n';
+    }
+    if(m_paginationEnabled) {
+        com.commandF(NULL, "set pagination off");
+    }
+    return rc;
+}
+
 
 
 /**
@@ -1472,7 +1497,10 @@ void Core::onExecAsyncOut(Tree &tree, AsyncClass ac)
                 m_inf->ICore_onStopped(reason, p, lineNo);
 
             m_inf->ICore_onFrameVarReset();
-            m_inf->ICore_onCoreMemChanged();
+
+            
+            if(m_targetState != ICore::TARGET_FINISHED)
+                m_inf->ICore_onCoreMemChanged();
 
 
             TreeNode *argsNode = tree.findChild("frame/args");
