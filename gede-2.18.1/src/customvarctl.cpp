@@ -129,7 +129,7 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
     // TODO ver si esta es la disposicion q me interesa
     // Create the item
     QStringList elementsList;
-    elementsList += region.getPointerAddress(); //region.getAddressHexString();
+    elementsList += region.getAddressHexString();
     elementsList += region.getBackupFile();
     elementsList += QString::number(region.getSizeInPages());
     QTreeWidgetItem *parent = createItem(&elementsList);
@@ -153,14 +153,31 @@ void CustomVarCtl::ICore_onCoreMemChanged(CoreMemRegion &region)
 
     parent->addChild(child2);
 
+    // backup file path
+    QStringList backupFileElement;
+    backupFileElement += "Backup file path";
+    backupFileElement += region.getBackupFilePath();
+    QTreeWidgetItem *childbckup = createItem(&backupFileElement);
+
+    parent->addChild(childbckup);
+
     // name
-    QStringList regionName;
-    regionName += "Region name";
-    regionName += region.getName();
-    QTreeWidgetItem *child3 = createItem(&regionName);
+    QStringList regionsList;
+    regionsList += "Regions";
+    QTreeWidgetItem *child3 = createItem(&regionsList);
 
     parent->addChild(child3);
 
+    QStringList regionNames  = region.getNames();
+    QStringList regionAddresses  = region.getRegionsAddresses();
+    for(int i = 0; i < regionNames.count(); i++) {
+        QStringList auxList;
+        auxList += regionNames[i];
+        auxList += regionAddresses[i];
+        QTreeWidgetItem *auxItem = createItem(&auxList);
+        child3->addChild(auxItem);
+    }
+    
     //
     QTreeWidgetItem* rootItem = memRegWidget->invisibleRootItem();
     rootItem->addChild(parent);

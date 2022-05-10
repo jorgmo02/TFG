@@ -162,13 +162,15 @@ public:
     virtual ~CoreMemRegion();
 
     int getID() { return id; }
-    QString getPointerAddress() { return m_address; };
-    //sQString getAddressHexString() { QStringLiteral("0x%1").arg(m_address, 6, 16, QLatin1Char('0'));};
+    quint64 getPointerAddress() { return m_address; };
+    QString getAddressHexString() { return QStringLiteral("0x%1").arg(m_address, 6, 16, QLatin1Char('0'));};
     QString getBackupFile() const { return m_backupfile; };
+    QString getBackupFilePath() const { return m_backupfilePath; };
     QString getPermissions() const { return m_permissions; };
     quint64 getSize() { return m_size; };
     quint64 getSizeInPages() { return m_size / PageSize; };
-    QString getName() const { return m_name; };
+    QStringList getNames() const { return m_names; };
+    QStringList getRegionsAddresses() const { return m_regionsAddr; };
 
     void setPointerAddress(quint64 addr) { m_address = addr; };
     void setBackupFile(QString backupfile) { m_backupfile = backupfile; };
@@ -176,7 +178,7 @@ public:
     
     void loadFromGdbString(QString data);
     void setPermissionsFromString(QString data);
-    void setNameFromString(QString data);
+    void setNamesFromString(QStringList data, int& index);
 
     bool operator==(const CoreMemRegion& other) {
         return m_address == other.m_address &&
@@ -193,11 +195,13 @@ private:
 
 private:
     int id = -1;
-    QString m_address = ""; //!< The address of data the variable points to.
+    quint64 m_address = 0; //!< The address of data the variable points to.
     QString m_backupfile = "";
+    QString m_backupfilePath = "";
     quint64 m_size = 0;
     QString m_permissions = "-------";
-    QString m_name = "";
+    QStringList m_names;
+    QStringList m_regionsAddr;
 };
 
 

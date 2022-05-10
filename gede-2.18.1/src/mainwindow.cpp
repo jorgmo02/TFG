@@ -587,11 +587,13 @@ void MainWindow::ICore_onCoreMemChanged()
 
     m_customVarCtl.clear();
     // TODO hay que revisar los indices estos
+
+    int indexRegionNames = 0;
     for(int i = 0; i < regions.size(); i++)
     {
         CoreMemRegion reg(regions[i]);
         reg.setPermissionsFromString(permissions[i]);
-        reg.setNameFromString(names[i]);
+        reg.setNamesFromString(names, indexRegionNames);
         m_customVarCtl.ICore_onCoreMemChanged(reg);
     }
 }

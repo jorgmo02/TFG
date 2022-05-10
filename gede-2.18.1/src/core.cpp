@@ -79,8 +79,9 @@ void CoreMemRegion::loadFromGdbString(QString data)
     // TODO cuidado con los indices
     QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
     bool ok;
-    m_address = dataSplit[0];//.toLong(&ok, 16);
-    m_backupfile = dataSplit[4];
+    QStringRef address = dataSplit[0].rightRef(16);
+    m_address = address.toULongLong(&ok, 16);
+    m_backupfilePath = dataSplit[4];
     m_size = dataSplit[2].toLong(&ok, 16);
 }
 
@@ -88,15 +89,37 @@ void CoreMemRegion::setPermissionsFromString(QString data)
 {
     // TODO cuidado con los indices
     QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
-    bool ok;
     m_permissions = dataSplit[2];
+
+    for(int i = 3; i < dataSplit.count(); i++)
+        m_backupfile += dataSplit[i];
 }
 
-void CoreMemRegion::setNameFromString(QString data)
+void CoreMemRegion::setNamesFromString(QStringList data, int& index)
 {
-    // TODO cuidado con los indices
-    QStringList dataSplit = data.split(QLatin1Char(' '), QString::SkipEmptyParts);
-    m_name = dataSplit[4];
+    quint64 m_nextAddress = m_address + m_size;
+    while(index < data.count())
+    {
+        QStringList dataSplit = data[index].split(QLatin1Char(' '), QString::SkipEmptyParts);
+        QStringList addrSplit = dataSplit[0].split(QLatin1Char('\t'), QString::SkipEmptyParts);
+        
+        QStringRef address = addrSplit[0].rightRef(16);
+        quint64 thisAddr = address.toULongLong(NULL, 16);
+
+        QStringRef addressEnd = dataSplit[2].rightRef(16);
+        quint64 thisAddrEnd = addressEnd.toULongLong(NULL, 16);
+
+        if(thisAddr > m_address)
+        {
+            if(thisAddrEnd < m_nextAddress){
+                m_names += dataSplit[4];
+                m_regionsAddr += addrSplit[0];
+                index++;
+            }
+            else return;
+        }
+        else index++;
+    }
 }
 
 void CoreMemRegion::clear()
@@ -981,6 +1004,8 @@ void Core::stop()
             critMsg("Failed to stop since PID of Gdb not known");
         }
 
+        if(m_paginationEnabled)
+            com.commandF(NULL, "set pagination on");
 
         com.command(NULL, "-exec-interrupt --all");
         com.command(NULL, "-exec-step-instruction");
