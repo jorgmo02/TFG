@@ -802,7 +802,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Custom Variables</string>
+    <string>Memory regions</string>
    </property>
   </action>
   <action name="actionViewTargetOutput">

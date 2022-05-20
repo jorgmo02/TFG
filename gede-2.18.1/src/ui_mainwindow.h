@@ -466,13 +466,6 @@ public:
         splitter_3 = new QSplitter(splitter_4);
         splitter_3->setObjectName(QString::fromUtf8("splitter_3"));
         splitter_3->setOrientation(Qt::Vertical);
-        autoWidget = new QTreeWidget(splitter_3);
-        QTreeWidgetItem *__qtreewidgetitem3 = new QTreeWidgetItem();
-        __qtreewidgetitem3->setText(0, QString::fromUtf8("1"));
-        autoWidget->setHeaderItem(__qtreewidgetitem3);
-        autoWidget->setObjectName(QString::fromUtf8("autoWidget"));
-        autoWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        autoWidget->setUniformRowHeights(true);
 
 //
         customWidget = new QTreeWidget(splitter_3);
@@ -484,7 +477,15 @@ public:
         customWidget->setUniformRowHeights(true);
 //
 
+        autoWidget = new QTreeWidget(splitter_3);
+        QTreeWidgetItem *__qtreewidgetitem3 = new QTreeWidgetItem();
+        __qtreewidgetitem3->setText(0, QString::fromUtf8("1"));
+        autoWidget->setHeaderItem(__qtreewidgetitem3);
+        autoWidget->setObjectName(QString::fromUtf8("autoWidget"));
+        autoWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        autoWidget->setUniformRowHeights(true);
         splitter_3->addWidget(autoWidget);
+
         varWidget = new QTreeWidget(splitter_3);
         QTreeWidgetItem *__qtreewidgetitem4 = new QTreeWidgetItem();
         __qtreewidgetitem4->setText(0, QString::fromUtf8("1"));
@@ -664,7 +665,7 @@ public:
         actionViewThreads->setText(QApplication::translate("MainWindow", "Threads", nullptr));
         actionViewWatch->setText(QApplication::translate("MainWindow", "Watch Variables", nullptr));
         actionViewAutoVariables->setText(QApplication::translate("MainWindow", "Auto Variables", nullptr));
-        actionViewCustomVariables->setText(QApplication::translate("MainWindow", "Custom Variables", nullptr));
+        actionViewCustomVariables->setText(QApplication::translate("MainWindow", "Memory regions", nullptr));
         actionViewTargetOutput->setText(QApplication::translate("MainWindow", "Target Console", nullptr));
         actionViewGdbOutput->setText(QApplication::translate("MainWindow", "GDB Output", nullptr));
         actionViewFileBrowser->setText(QApplication::translate("MainWindow", "File Browser", nullptr));
