@@ -7,10 +7,29 @@ La extensión permite visualizar el mapa de memoria del proceso que se está dep
 <figure>
 
 <img src="./imgs/capture_general_redsq.png">
-<figcaption align=center><b>Extensión desarrollada (remarcada en rojo)</b></figcaption>
+<figcaption align=center><b>Figura 1: extensión desarrollada (remarcada en rojo)</b></figcaption>
 
 </figure>
 
-<br>
+La extensión funciona mediante combinando las salidas comandos de GDB (<i>info proc mappings</i> e <i>info files</i>) y llamadas al sistema (<i>pmap</i>) para acabar ofreciendo toda la información junta y de una manera simple y cómoda.
 
-<!-- ## Ejemplos de uso -->
+## <b>Instalación</b>
+---
+
+Las instrucciones para compilar Gede se incluyen [aquí](./gede-2.18.1/README). No se necesitan pasos adicionales para instalar la extensión.
+
+## <b>Uso</b>
+---
+
+La extensión muestra los valores más importantes del mapa de memoria.
+
+El número hexadecimal bajo la columna de nombre ``Memory start`` (1) señala el comienzo de la región de memoria mapeada. A su lado, ``Objfile`` (2) representa el nombre del fichero de respaldo. ``Size (in pages)`` (3) representa el tamaño de esa región de memoria en páginas.
+
+Cuando presionamos el triángulo a la izquierda de la dirección inicial de memoria, se despliega la información relativa al bloque de memoria. En ese momento se pueden leer el ``tamaño en bytes`` (4), sus ``permisos de acceso`` (5), la ``ruta completa del fichero de respaldo`` (6) y otro desplegable con las ``regiones`` incluidas en ese espacio de memoria (7), vacío para este ejemplo.
+
+<figure>
+
+<img src="./imgs/capture_closeup_numbered.png">
+<figcaption align=center><b>Figura 2: elementos del mapa de memoria</b></figcaption>
+
+</figure>
