@@ -7,7 +7,7 @@ La extensión permite visualizar el mapa de memoria del proceso que se está dep
 <figure>
 
 <img src="./imgs/capture_general_redsq.png">
-<figcaption alignment="center"><b>Extensión desarrollada (remarcada en rojo)</b></figcaption>
+<figcaption align=center><b>Extensión desarrollada (remarcada en rojo)</b></figcaption>
 
 </figure>
 
