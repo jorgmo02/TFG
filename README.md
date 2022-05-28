@@ -1,5 +1,9 @@
 # Herramienta de depuración con representación de regiones de memoria
 
+Este proyecto ha sido desarrollado en el curso 2021-2022 como el Trabajo de Fin de Grado (TFG) de [Jorge Moreno Martínez](mailto:jorgemomartin@gmail.com), alumno del Grado en Desarrollo de Videojuegos de la Universidad Complutense de Madrid.
+
+## Resumen
+
 Este proyecto es una extensión para una interfaz gráfica de usuario (GUI, por sus siglas en inglés) de depuración, con el objetivo de añadir funcionalidades relacionadas con las regiones de memoria. El depurador escogido ha sido GDB, que funciona para varios lenguajes de programación. En concreto, la extensión se ha centrado en los lenguajes C y C++, y se ha añadido a la GUI [Gede](https://gede.dexar.se/), desarrollada por Johan Henriksson ([johan@dexar.se](mailto:johan@dexar.se)).
 
 La extensión permite visualizar el mapa de memoria del proceso que se está depurando, incluyendo información sobre los tamaños de cada región de memoria, sus posiciones en memoria virtual, el fichero de respaldo de cada una y los permisos de acceso del proceso.
@@ -11,15 +15,17 @@ La extensión permite visualizar el mapa de memoria del proceso que se está dep
 
 </figure>
 
+<br>
+
 La extensión funciona mediante combinando las salidas comandos de GDB (<i>info proc mappings</i> e <i>info files</i>) y llamadas al sistema (<i>pmap</i>) para acabar ofreciendo toda la información junta y de una manera simple y cómoda.
 
 ## <b>Instalación</b>
----
+
+La última versión de la extensión se puede encontrar en [https://github.com/jorgmo02/TFG/releases](https://github.com/jorgmo02/TFG/releases).
 
 Las instrucciones para compilar Gede se incluyen [aquí](./gede-2.18.1/README). No se necesitan pasos adicionales para instalar la extensión.
 
 ## <b>Uso</b>
----
 
 La extensión muestra los valores más importantes del mapa de memoria.
 
