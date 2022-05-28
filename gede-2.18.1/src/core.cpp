@@ -109,7 +109,7 @@ void CoreMemRegion::setNamesFromString(QStringList data, int& index)
         QStringRef addressEnd = dataSplit[2].rightRef(16);
         quint64 thisAddrEnd = addressEnd.toULongLong(NULL, 16);
 
-        if(thisAddr > m_address)
+        if(thisAddr >= m_address)
         {
             if(thisAddrEnd < m_nextAddress){
                 m_names += dataSplit[4];
